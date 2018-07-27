@@ -1,0 +1,8 @@
+{
+  "name": "teamPerature",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular",
+  "pro_id": "f5a41013"
+}
