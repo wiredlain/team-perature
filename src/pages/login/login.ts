@@ -59,11 +59,6 @@ export class LoginPage {
     });
     this.loading.present();
   }
-  
-
-  goToSignup(){
-    this.navCtrl.push('SignupPage');
-  }
 
   goToResetPassword(){
     this.navCtrl.push('ResetPasswordPage');
