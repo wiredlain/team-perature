@@ -5,47 +5,43 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar secondary>
-    <ion-buttons start>
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
-    </ion-buttons>
-    <ion-title>Formulario</ion-title>
-  </ion-navbar>
+	<ion-navbar primary>
+		<ion-buttons start>
+			<button ion-button menuToggle>
+				<ion-icon name="menu"></ion-icon>
+			</button>
+		</ion-buttons>
+		<ion-title>Formulario</ion-title>
+	</ion-navbar>
 </ion-header>
 
 
-<ion-content padding>
-  <ion-grid>
-    <ion-row>
-      <ion-col col-3>
-        <ion-item>
-          <ion-label stacked>Filter</ion-label>
-          <ion-select interface="popover">
-            <ion-option value="10">10</ion-option>
-            <ion-option value="20">20</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-      <ion-col col-3>
-        <ion-item>
-          <ion-label>Due Date</ion-label>
-          <ion-select interface="popover">
-            <ion-option value="10">10</ion-option>
-            <ion-option value="20">20</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-      <ion-col col-3>
-        <ion-item>
-          <ion-label>Descending</ion-label>
-          <ion-select interface="popover">
-            <ion-option value="10">10</ion-option>
-            <ion-option value="20">20</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-content>
+	<ion-simple-wizard [(step)]="step" [showSteps]="true" (finish)="onFinish()" [finishIcon]="'done-all'">
+		<ion-wizard-step *ngFor="let step of preguntas;index as i">
+			<ion-card>
+				<ion-card-header>
+					{{step.titulo}}
+				</ion-card-header>
+				<ion-card-content>
+					{{step.descripcion}}
+					<ion-item>
+						<ion-range 
+							min="1" max="5" 
+							step="1" snaps="true" 
+							color="primary"
+							[(ngModel)]="rango">
+						</ion-range>
+					</ion-item>
+					<ion-item>
+							<ion-textarea 
+								elastic 
+								placeholder="Ingresa un comentario"
+								[(ngModel)]="comentario[i]"
+								required></ion-textarea>
+						</ion-item>
+				</ion-card-content>
+			</ion-card>
+		</ion-wizard-step>
+	</ion-simple-wizard>
 </ion-content>
