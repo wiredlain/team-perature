@@ -18,7 +18,7 @@ import { FeedProvider, Feed } from '../../providers/feed/feed';
 export class HomePage {
   @ViewChild(Nav) nav: Nav;
  
-  rootPage = 'FeedListPage';
+  rootPage = 'OpcionesHomePage';
   feeds: Feed[];
 
   constructor(private navController: NavController, public afAuth: AngularFireAuth, private feedProvider: FeedProvider, public alertCtrl: AlertController) { }
@@ -74,7 +74,7 @@ export class HomePage {
   }
  
   public openFeed(feed: Feed) {
-    this.nav.setRoot('FeedListPage', { 'selectedFeed': feed });
+    //this.nav.setRoot('FormularioPage');
   }
  
   public ionViewWillEnter() {
