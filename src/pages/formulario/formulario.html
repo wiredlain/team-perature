@@ -17,11 +17,14 @@
 
 
 <ion-content>
-	<ion-simple-wizard [(step)]="step" [showSteps]="true" (finish)="onFinish()" [finishIcon]="'done-all'">
+	<ion-simple-wizard 
+		[(step)]="step" [showSteps]="true" 
+		(finish)="onFinish()" 
+		[finishIcon]="'done-all'" *ngIf="!preview">
 		<ion-wizard-step *ngFor="let step of preguntas;index as i">
 			<ion-card>
 				<ion-card-header>
-					{{step.titulo}}
+					{{i + 1}}.- {{step.titulo}}
 				</ion-card-header>
 				<ion-card-content>
 					{{step.descripcion}}
@@ -30,18 +33,40 @@
 							min="1" max="5" 
 							step="1" snaps="true" 
 							color="primary"
-							[(ngModel)]="rango">
+							[(ngModel)]="modelo_preguntas[i].rango">
 						</ion-range>
 					</ion-item>
 					<ion-item>
 							<ion-textarea 
 								elastic 
 								placeholder="Ingresa un comentario"
-								[(ngModel)]="comentario[i]"
+								[(ngModel)]="modelo_preguntas[i].comentario"
 								required></ion-textarea>
 						</ion-item>
 				</ion-card-content>
 			</ion-card>
 		</ion-wizard-step>
 	</ion-simple-wizard>
+	<div padding *ngIf="preview">
+		<ion-title>Resumen del Formulario</ion-title>
+		<ion-card *ngFor="let step of preguntas;index as i">
+			<ion-card-header>
+				{{i + 1}}.- {{step.titulo}}
+			</ion-card-header>
+			<ion-card-content>
+				<ion-item>
+					<ion-range
+						disabled
+						min="1" max="5" 
+						step="1" snaps="true" 
+						color="primary"
+						[(ngModel)]="modelo_preguntas[i].rango">
+					</ion-range>
+				</ion-item>
+				<ion-item>
+					{{modelo_preguntas[i].comentario}}
+				</ion-item>
+			</ion-card-content>
+		</ion-card>
+	</div>
 </ion-content>
