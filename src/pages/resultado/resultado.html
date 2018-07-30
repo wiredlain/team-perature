@@ -14,5 +14,41 @@
 
 
 <ion-content padding>
+  <ion-item>
+  <ion-label>Encuesta</ion-label>
+  <ion-select [(ngModel)]="encuesta" (ionChange)="alerta(encuesta);">
+    <ion-option *ngFor="let option of listEncuesta">{{option}}</ion-option>
+  </ion-select>
+  </ion-item>
 
+  <ion-item>
+    <table style="display: inline">
+      <thead>
+        <th>Área</th>
+      </thead>
+      <tbody>
+        <tr><td>Entrega de valor</td></tr>
+        <tr><td>Fácil de desplegar</td></tr>
+        <tr><td>Diversión</td></tr>
+        <tr><td>Calidad de código</td></tr>
+        <tr><td>Aprendizaje</td></tr>
+        <tr><td>Mision</td></tr>
+        <tr><td>Peones o jugadores</td></tr>
+        <tr><td>Velocidad</td></tr>
+        <tr><td>Proceso adecuado</td></tr>
+        <tr><td>Soporte</td></tr>
+        <tr><td>Trabajo en equipo</td></tr>
+        <tr><td>Total General Celula</td></tr>
+      </tbody>
+    </table>
+    <table style="display: inline" *ngFor="let respuesta of listaRespuestas">
+      <thead>
+        <th>{{ respuesta.nombreCelula }}</th>
+      </thead>
+    <tbody>
+      <tr *ngFor="let item of respuesta.respuestas"><td>{{item.idRespuesta}}</td></tr>
+    </tbody>
+    </table>
+
+  </ion-item>
 </ion-content>
