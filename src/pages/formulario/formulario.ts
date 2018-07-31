@@ -89,13 +89,48 @@ export class FormularioPage {
 					text: "Aceptar",
 					handler: () => {
 						this.preview = true;
-						console.log(this.modelo_preguntas);
-
 					}
 				}
 			]
 		});
 		alert.present();
+	}
+	onGuardar(): void {
+		this.loading = this.loadingCtrl.create({
+			dismissOnPageChange: true
+		});
+		this.loading.present().then(()=>{
+			this.cuestionarioService.createCuestionario(this.cuestionario).subscribe((respuesta) => {
+				this.loading.dismiss().then(() => {
+					let alert = this.alertCtrl.create({
+						message: "Formulario Guardado Exitosamente",
+						buttons: [
+							{
+								text: "Ok",
+								role: "cancel",
+								handler: () => {
+									this.navCtrl.setRoot("HomePage");
+								}
+							}
+						]
+					});
+					alert.present();
+				});
+			}, err => {
+				this.loading.dismiss().then(() => {
+					let alert = this.alertCtrl.create({
+						message: "Error al guardar el formulario",
+						buttons: [
+							{
+								text: "Ok",
+								role: "cancel",
+							}
+						]
+					});
+					alert.present();
+				});
+			});
+		});
 	}
 
 	toggleCondition(_condition) {
@@ -112,36 +147,47 @@ export class FormularioPage {
 				cuestionarios => {
 					//let id = Object.keys(cuestionarios)[0];
 					let _cuestionario = cuestionarios;
-					let _preguntas = _cuestionario.jsonPreguntas.preguntas;
+					let _preguntas:any = _cuestionario.jsonPreguntas;
 	
 					let preguntas = [];
-					let contador = 0;
-					_.forEach(_preguntas, (item: any) => {
+					_.forEach(_preguntas, (item: ItemPregunta) => {
 						let p = new ItemPregunta(
 							item.observacionPregunta,
 							item.DescripcionPregunta,
 							item.NumeroOrden,
 							item.idPregunta,
-							item.valor
+							item.valor,
+							item.Comentario
 						);
 						preguntas.push(p);
-						this.modelo_preguntas[contador] = { comentario: null, rango: null };
-						contador++;
-						console.log(this.modelo_preguntas);
 					});
-	
+					
 					this.cuestionario = new Cuestionario(
 						_cuestionario.descripcion,
-						_cuestionario.fechaInicio,
+						_cuestionario.fechaIni,
 						_cuestionario.fechaFin,
+						_cuestionario.estado,
 						preguntas
-					);
+					);					
 					this.preguntas = preguntas;
 					this.loading.dismiss();
 				},
 				error => {
-					this.loading.dismiss();
-					console.log(error);
+					this.loading.dismiss().then(() => {
+						let alert = this.alertCtrl.create({
+							message: "Error al obtener el formulario",
+							buttons: [
+								{
+									text: "Ok",
+									role: "cancel",
+									handler: () => {
+										this.navCtrl.setRoot('HomePage');
+									}
+								}
+							]
+						});
+						alert.present();
+					});
 				}
 			);
 		});

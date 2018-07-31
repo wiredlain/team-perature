@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApiService } from '../api/api';
+import { Observable } from 'rxjs';
 
 /*
   Generated class for the UserServiceProvider provider.
@@ -10,8 +12,23 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class UserServiceProvider {
 
-  constructor(public http: HttpClient) {
-    console.log('Hello UserServiceProvider Provider');
-  }
+	token: any;
+
+	constructor(
+		private apiService: ApiService
+	) { }
+
+	getToken(UUID: string): Observable<String> {
+		if (this.token !== undefined && this.token !== null) {
+			return Observable.of(this.token);
+		} else {
+			let headers = { 'UUID': UUID}
+			return this.apiService.get(`/getToken`, null, headers)
+				.map(response => {
+					return response.customToken;
+				}
+			);
+		}
+	}
 
 }

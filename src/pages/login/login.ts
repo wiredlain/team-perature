@@ -10,6 +10,8 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AngularFireAuth } from "angularfire2/auth";
 import * as firebase from "firebase/app";
 import { Observable } from "rxjs/Observable";
+import { JwtService } from "../../providers/jwt-service/jwt-service";
+import { UserServiceProvider } from "../../providers/user-service/user-service";
 
 @IonicPage()
 @Component({
@@ -26,14 +28,15 @@ export class LoginPage {
 		public formBuilder: FormBuilder,
 		public afAuth: AngularFireAuth,
 		public alertCtrl: AlertController,
-		public loadingCtrl: LoadingController
+		public loadingCtrl: LoadingController,
+		public jwtService: JwtService,
+		public authService: UserServiceProvider
 	) {
 		this.myForm = this.formBuilder.group({
 			email: ["", Validators.required],
 			password: ["", Validators.required]
 		});
 		this.user = afAuth.authState;
-		console.log(this.user);
 		
 	}
 
@@ -51,7 +54,13 @@ export class LoginPage {
 			)
 			.then(
 				(user) => {
-					console.log("User logging:", user.user.uid);
+					this.authService.getToken("1").subscribe((token) => {
+						this.jwtService.saveToken(token);
+					});
+					// this.afAuth.auth.currentUser.getIdToken().then((token) => {
+					// 	this.jwtService.saveToken(token);
+					// })
+					console.log("User logging:", user, this.user);
 					this.loading.dismiss();
 					this.navCtrl.setRoot("HomePage");
 				},

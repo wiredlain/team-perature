@@ -1,42 +1,31 @@
 <ion-header>
-		<ion-navbar primary>
-			<ion-buttons start>
-				<button ion-button menuToggle>
-					<ion-icon name="menu"></ion-icon>
-				</button>
-			</ion-buttons>
-			<ion-title>Formulario</ion-title>
-		</ion-navbar>
-	</ion-header>
-	
-	
-	<ion-content>
-		<ion-simple-wizard 
-			[(step)]="step" [showSteps]="true" 
-			(finish)="onFinish()" 
-			[finishIcon]="'done-all'" *ngIf="!preview">
-			<ion-wizard-step *ngFor="let step of preguntas;index as i">
+	<ion-navbar primary>
+		<ion-buttons start>
+			<button ion-button menuToggle>
+				<ion-icon name="menu"></ion-icon>
+			</button>
+		</ion-buttons>
+		<ion-title>Formulario</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<div *ngIf="cuestionario">
+		<ion-simple-wizard [(step)]="step" [showSteps]="true" (finish)="onFinish()" [finishIcon]="'done-all'" *ngIf="!preview">
+			<ion-wizard-step *ngFor="let step of cuestionario.jsonPreguntas;index as i">
 				<ion-grid>
 					<ion-row responsive-sm>
 						<ion-col width-50>
-							<ion-label>{{i + 1}}.- {{step.titulo}}</ion-label>
-							{{step.descripcion}}
+							<ion-label>{{i + 1}}.- {{step.DescripcionPregunta}}</ion-label>
+							{{step.observacionPregunta}}
 							<ion-item>
 								<ion-label color="primary" stacked>Valorización</ion-label>
-								<ion-range 
-									min="1" max="5" 
-									step="1" snaps="true" 
-									color="primary"
-									[(ngModel)]="modelo_preguntas[i].rango">
+								<ion-range min="1" max="5" step="1" snaps="true" color="primary" [(ngModel)]="step.valor">
 								</ion-range>
 							</ion-item>
 							<ion-item>
 								<ion-label color="primary" stacked>Comentario</ion-label>
-								<ion-textarea 
-									rows="5"
-									placeholder="Ingresa un comentario"
-									[(ngModel)]="modelo_preguntas[i].comentario"
-									required>
+								<ion-textarea rows="5" placeholder="Ingresa un comentario" [(ngModel)]="step.Comentario" required>
 								</ion-textarea>
 							</ion-item>
 						</ion-col>
@@ -46,33 +35,29 @@
 		</ion-simple-wizard>
 		<div padding *ngIf="preview">
 			<ion-title>Resumen del Formulario</ion-title>
-			<ion-card *ngFor="let step of preguntas;index as i">
+			<ion-card *ngFor="let step of cuestionario.jsonPreguntas;index as i">
 				<ion-card-header>
-					{{i + 1}}.- {{step.titulo}}
+					{{i + 1}}.- {{step.DescripcionPregunta}}
 				</ion-card-header>
 				<ion-card-content>
 					<ion-item>
 						<ion-label color="primary" stacked>Valorización</ion-label>
-						<ion-range
-							disabled
-							min="1" max="5" 
-							step="1" snaps="true" 
-							color="primary"
-							[(ngModel)]="modelo_preguntas[i].rango">
+						<ion-range disabled min="1" max="5" step="1" snaps="true" color="primary" [(ngModel)]="step.valor">
 						</ion-range>
 					</ion-item>
-					<ion-item>	
-						{{modelo_preguntas[i].comentario}}
+					<ion-item>
+						{{step.Comentario}}
 					</ion-item>
 				</ion-card-content>
 			</ion-card>
-			<ion-row right>  
-				<ion-col text-left>   
+			<ion-row right>
+				<ion-col text-left>
 					<button ion-button color="light">Cancelar</button>
 				</ion-col>
-				<ion-col text-right>   
-					<button ion-button color="primary">Guardar</button>
+				<ion-col text-right>
+					<button ion-button color="primary" (click)="onGuardar();">Guardar</button>
 				</ion-col>
 			</ion-row>
 		</div>
-	</ion-content>
+	</div>
+</ion-content>
