@@ -18,6 +18,7 @@ import { CuestionarioProvider } from '../providers/cuestionario/cuestionario';
 import { ApiService } from "../providers/api/api";
 import { JwtService } from "../providers/jwt-service/jwt-service";
 import { firebaseConfig } from "../environments/environment";
+import { UserServiceProvider } from '../providers/user-service/user-service';
 // import { ApiProvider } from '../providers/api/api';
 // import { JwtServiceProvider } from '../providers/jwt-service/jwt-service';
 
@@ -26,7 +27,7 @@ import { firebaseConfig } from "../environments/environment";
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {scrollAssist: false }),
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
@@ -42,7 +43,8 @@ import { firebaseConfig } from "../environments/environment";
     InAppBrowser,
     CuestionarioProvider,
     ApiService,
-    JwtService
+    JwtService,
+    UserServiceProvider
   ]
 })
 export class AppModule {}
