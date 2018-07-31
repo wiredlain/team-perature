@@ -19,6 +19,8 @@ import { ApiService } from "../providers/api/api";
 import { JwtService } from "../providers/jwt-service/jwt-service";
 import { firebaseConfig } from "../environments/environment";
 import { UserServiceProvider } from '../providers/user-service/user-service';
+import { AuthProvider } from '../providers/auth/auth';
+import { AngularFireDatabaseModule } from "angularfire2/database";
 // import { ApiProvider } from '../providers/api/api';
 // import { JwtServiceProvider } from '../providers/jwt-service/jwt-service';
 
@@ -31,6 +33,7 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
     BrowserAnimationsModule
   ],
   bootstrap: [IonicApp],
@@ -44,7 +47,8 @@ import { UserServiceProvider } from '../providers/user-service/user-service';
     CuestionarioProvider,
     ApiService,
     JwtService,
-    UserServiceProvider
+    UserServiceProvider,
+    AuthProvider
   ]
 })
 export class AppModule {}
