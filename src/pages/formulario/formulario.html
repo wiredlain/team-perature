@@ -16,17 +16,20 @@
 				<ion-grid>
 					<ion-row responsive-sm>
 						<ion-col width-50>
-							<ion-label>{{i + 1}}.- {{step.DescripcionPregunta}}</ion-label>
-							{{step.observacionPregunta}}
+							<ion-row>
+								<ion-col col-12>
+									<ion-label>{{i + 1}}.- {{step.DescripcionPregunta}}</ion-label>
+									{{step.observacionPregunta}}
+								</ion-col>
+							</ion-row>
 							<ion-item>
 								<ion-label color="primary" stacked>Valorización</ion-label>
-								<ion-range min="1" max="5" step="1" snaps="true" color="primary" [(ngModel)]="step.valor">
+								<ion-range pin="true" min="1" max="5" step="1" snaps="true" color="primary" [(ngModel)]="step.valor">
 								</ion-range>
 							</ion-item>
 							<ion-item>
 								<ion-label color="primary" stacked>Comentario</ion-label>
-								<ion-textarea rows="5" placeholder="Ingresa un comentario" [(ngModel)]="step.Comentario" required>
-								</ion-textarea>
+								<ion-textarea rows="5" placeholder="Ingresa un comentario" [(ngModel)]="step.Comentario" required></ion-textarea>
 							</ion-item>
 						</ion-col>
 					</ion-row>
