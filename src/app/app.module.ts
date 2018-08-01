@@ -3,6 +3,7 @@ import { ErrorHandler, NgModule } from "@angular/core";
 import { IonicApp, IonicErrorHandler, IonicModule } from "ionic-angular";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { StatusBar } from "@ionic-native/status-bar";
+import { Keyboard } from "@ionic-native/keyboard";
 
 import { MyApp } from "./app.component";
 
@@ -14,22 +15,27 @@ import { IonicStorageModule } from "@ionic/storage";
 import { InAppBrowser } from "@ionic-native/in-app-browser";
 import { HttpModule } from "@angular/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { CuestionarioProvider } from '../providers/cuestionario/cuestionario';
+import { CuestionarioProvider } from "../providers/cuestionario/cuestionario";
 import { ApiService } from "../providers/api/api";
 import { JwtService } from "../providers/jwt-service/jwt-service";
 import { firebaseConfig } from "../environments/environment";
-import { UserServiceProvider } from '../providers/user-service/user-service';
-import { AuthProvider } from '../providers/auth/auth';
+import { UserServiceProvider } from "../providers/user-service/user-service";
+import { AuthProvider } from "../providers/auth/auth";
 import { AngularFireDatabaseModule } from "angularfire2/database";
-// import { ApiProvider } from '../providers/api/api';
-// import { JwtServiceProvider } from '../providers/jwt-service/jwt-service';
+import { LoginPage } from "../pages/login/login";
+import { NotificacionesPage } from "../pages/notificaciones/notificaciones";
+import { SettingsPage } from "../pages/settings/settings";
 
 @NgModule({
-  declarations: [MyApp],
+  declarations: [MyApp, LoginPage, NotificacionesPage, SettingsPage],
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp, {scrollAssist: false }),
+    IonicModule.forRoot(MyApp, {
+      scrollPadding: false,
+      scrollAssist: true,
+      autoFocusAssist: false
+    }),
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
@@ -37,7 +43,7 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
     BrowserAnimationsModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp],
+  entryComponents: [MyApp, LoginPage, NotificacionesPage, SettingsPage],
   providers: [
     StatusBar,
     SplashScreen,
@@ -48,7 +54,8 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
     ApiService,
     JwtService,
     UserServiceProvider,
-    AuthProvider
+    AuthProvider,
+    Keyboard
   ]
 })
 export class AppModule {}

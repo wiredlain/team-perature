@@ -54,7 +54,9 @@ export class LoginPage {
 			)
 			.then(
 				(user) => {
-					this.authService.getToken("1").subscribe((token) => {
+					let uid = user.user.uid;
+					this.authService.saveUUID(uid);
+					this.authService.getToken(uid).subscribe((token) => {
 						this.jwtService.saveToken(token);
 						this.loading.dismiss();
 						this.navCtrl.setRoot("HomePage");
@@ -75,9 +77,6 @@ export class LoginPage {
 							alert.present();
 						});
 					});
-					// this.afAuth.auth.currentUser.getIdToken().then((token) => {
-					// 	this.jwtService.saveToken(token);
-					// })
 				},
 				err => {
 					this.loading.dismiss().then(() => {

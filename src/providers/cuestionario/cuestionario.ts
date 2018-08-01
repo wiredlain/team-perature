@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { ApiService } from "../api/api";
 import { Http } from "@angular/http";
 import { Observable } from "rxjs";
+import { UserServiceProvider } from "../user-service/user-service";
 
 /*
   Generated class for the CuestionarioProvider provider.
@@ -57,16 +58,19 @@ export class Cuestionario {
 @Injectable()
 export class CuestionarioProvider {
 	cuestionario: any;
-
+	uid:String;
 	constructor(
-		private apiService: ApiService
-	) { }
+		private apiService: ApiService,
+		private userService: UserServiceProvider
+	) {
+		this.uid = this.userService.getUUID();
+	}
 
-	getAll(): Observable<Cuestionario> {
+	getCuestionario(uidCuestionario: string): Observable<Cuestionario> {
         if (this.cuestionario !== undefined && this.cuestionario !== null) {
             return Observable.of(this.cuestionario);
         } else {
-			let headers = {'UUID': 1, 'IDCUESTIONARIO': 'R0IPoWPzvH7gOC4xCLyZ'}
+			let headers = {'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario}
             return this.apiService.get(`/cuestionario`, null, headers)
                 .map(response => {
                     return response.cuestionario;
@@ -74,8 +78,8 @@ export class CuestionarioProvider {
 			);
         }
 	}
-	createCuestionario(data): Observable<any> {
-		let headers = {'UUID': 1, 'IDCUESTIONARIO': 'R0IPoWPzvH7gOC4xCLyZ', "content-type" : "application/json"}
+	createCuestionario(data, uidCuestionario: string): Observable<any> {
+		let headers = {'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario, "content-type" : "application/json", 'idCelula': 1}
     	return this.apiService.post(`/guardar/`, data, headers)
       		.map(response => {
         		return response;

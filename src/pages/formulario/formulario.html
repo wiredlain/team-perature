@@ -1,11 +1,9 @@
 <ion-header>
-	<ion-navbar primary>
-		<ion-buttons start>
-			<button ion-button menuToggle>
-				<ion-icon name="menu"></ion-icon>
-			</button>
-		</ion-buttons>
-		<ion-title>Formulario</ion-title>
+	<ion-navbar color="primary">
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>Encuesta</ion-title>
 	</ion-navbar>
 </ion-header>
 
@@ -13,54 +11,67 @@
 	<div *ngIf="cuestionario">
 		<ion-simple-wizard [(step)]="step" [showSteps]="true" (finish)="onFinish()" [finishIcon]="'done-all'" *ngIf="!preview">
 			<ion-wizard-step *ngFor="let step of cuestionario.jsonPreguntas;index as i">
-				<ion-grid>
-					<ion-row responsive-sm>
-						<ion-col width-50>
-							<ion-row>
-								<ion-col col-12>
-									<ion-label>{{i + 1}}.- {{step.DescripcionPregunta}}</ion-label>
-									{{step.observacionPregunta}}
-								</ion-col>
-							</ion-row>
-							<ion-item>
-								<ion-label color="primary" stacked>Valorización</ion-label>
-								<ion-range pin="true" min="1" max="5" step="1" snaps="true" color="primary" [(ngModel)]="step.valor">
-								</ion-range>
-							</ion-item>
-							<ion-item>
-								<ion-label color="primary" stacked>Comentario</ion-label>
-								<ion-textarea rows="5" placeholder="Ingresa un comentario" [(ngModel)]="step.Comentario" required></ion-textarea>
-							</ion-item>
-						</ion-col>
-					</ion-row>
-				</ion-grid>
+				<ion-list>
+					<ion-item>
+						<ion-label stacked color="primary">
+							<ion-icon name="book" item-start class="text-primary"></ion-icon>
+							{{i + 1}}.- {{step.DescripcionPregunta}}
+						</ion-label>
+						<ion-textarea ion-text rows="5" [innerHTML]="step.observacionPregunta"></ion-textarea>
+					</ion-item>
+				
+					<ion-item>
+						<ion-label stacked>
+							<ion-icon name="star" item-start class="text-primary"></ion-icon>
+							Puntuación <ion-badge>{{step.valor}}</ion-badge>
+						</ion-label>
+						<ion-range min="1" max="5" step="1" snaps="true" color="primary" [(ngModel)]="step.valor"></ion-range>
+					</ion-item>
+				
+					<ion-item>
+						<ion-label stacked color="primary">
+							<ion-icon name="chatbubbles" item-start class="text-primary"></ion-icon>
+							Comentario
+						</ion-label>
+						<ion-textarea rows="5" ion-text placeholder="Ingresa un comentario" [(ngModel)]="step.Comentario" required></ion-textarea>
+					</ion-item>
+				</ion-list>
 			</ion-wizard-step>
 		</ion-simple-wizard>
 		<div padding *ngIf="preview">
-			<ion-title>Resumen del Formulario</ion-title>
-			<ion-card *ngFor="let step of cuestionario.jsonPreguntas;index as i">
-				<ion-card-header>
-					{{i + 1}}.- {{step.DescripcionPregunta}}
-				</ion-card-header>
-				<ion-card-content>
-					<ion-item>
-						<ion-label color="primary" stacked>Valorización</ion-label>
-						<ion-range disabled min="1" max="5" step="1" snaps="true" color="primary" [(ngModel)]="step.valor">
-						</ion-range>
+			<ion-list class="preview">
+				<ion-item text-wrap>
+					<ion-title>Resumen del Formulario</ion-title>
+					<p padding>Debes revisar bien tus respuestas antes de enviar tu formulario</p>
+				</ion-item>
+				<div *ngFor="let step of cuestionario.jsonPreguntas;index as i">
+					<ion-item class="pregunta">
+						<p ion-text color="label label-md" color="primary">
+							<ion-icon name="book" item-start class="text-primary"></ion-icon>
+							{{i + 1}}.- {{step.DescripcionPregunta}}
+						</p>
+						<p ion-text color="label label-md" color="primary">
+							<ion-icon name="star" item-start class="text-primary"></ion-icon>
+							Puntuación <ion-badge>{{step.valor}}</ion-badge>
+							</p>
+						<p ion-text color="label label-md" color="primary">
+							<ion-icon name="chatbubbles" item-start class="text-primary"></ion-icon>
+							Comentario
+						</p>
+						<p text-wrap [innerHTML]="step.Comentario ? step.Comentario : 'Sin Comentarios'"></p>
 					</ion-item>
-					<ion-item>
-						{{step.Comentario}}
-					</ion-item>
-				</ion-card-content>
-			</ion-card>
-			<ion-row right>
-				<ion-col text-left>
-					<button ion-button color="light">Cancelar</button>
-				</ion-col>
-				<ion-col text-right>
-					<button ion-button color="primary" (click)="onGuardar();">Guardar</button>
-				</ion-col>
-			</ion-row>
+				</div>
+				<ion-item>
+					<ion-row right>
+						<ion-col text-left>
+							<button ion-button color="light" (click)="onCancelar();">Cancelar</button>
+						</ion-col>
+						<ion-col text-right>
+							<button ion-button color="primary" (click)="onGuardar();">Guardar</button>
+						</ion-col>
+					</ion-row>
+				</ion-item>
+			</ion-list>
 		</div>
 	</div>
 </ion-content>

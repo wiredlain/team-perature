@@ -1,33 +1,76 @@
-<ion-header>
-  <ion-navbar color="primary">
-    <ion-title>Login</ion-title>
-  </ion-navbar>
+<!--<ion-header>
+	<ion-navbar color="primary">
+		<ion-title>Login</ion-title>
+	</ion-navbar>
 </ion-header>
 
 <ion-content>
-  <form [formGroup]="myForm" (ngSubmit)="loginUser()">
-    <ion-list>
-      <ion-item text-center>
-        <ion-img width="300" height="100" src="assets/tcs.png" ></ion-img>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="person" item-left></ion-icon>
-        <ion-label stacked>Email:</ion-label>
-        <ion-input formControlName="email" type="text" placeholder="Email"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-icon name="key" item-left></ion-icon>
-        <ion-label stacked>Password:</ion-label>
-        <ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
-      </ion-item>
-    </ion-list>
-    <div padding>
-      <button ion-button block type="submit" [disabled]="!myForm.valid">Ingresar</button>
-    </div>
-  </form>
-  <div text-center>
-    <a ion-button block clear (click)="goToResetPassword()">
-      Olvide password
-    </a>
-  </div>
+	<form [formGroup]="myForm" (ngSubmit)="loginUser()">
+		<ion-list>
+			<ion-item text-center>
+				<ion-img width="300" height="100" src="assets/tcs.png"></ion-img>
+				<h2 ion-text>Perature</h2>
+			</ion-item>
+			<ion-item>
+				<ion-icon name="person" item-left></ion-icon>
+				<ion-label stacked>Email:</ion-label>
+				<ion-input formControlName="email" type="text" placeholder="Email"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-icon name="key" item-left></ion-icon>
+				<ion-label stacked>Password:</ion-label>
+				<ion-input formControlName="password" type="password" placeholder="Password"></ion-input>
+			</ion-item>
+		</ion-list>
+		<div padding>
+			<button ion-button block type="submit" [disabled]="!myForm.valid">Ingresar</button>
+		</div>
+	</form>
+	<div text-center>
+		<a ion-button block clear (click)="goToResetPassword()">
+			Olvide password
+		</a>
+	</div>
+</ion-content>-->
+
+<!-- -->
+<ion-content padding class="animated fadeIn login auth-page">
+	<div class="login-content">
+
+		<!-- Logo -->
+		<div padding-horizontal text-center class="animated fadeInDown">
+			<div class="logo"></div>
+			<h2 ion-text class="text-primary">
+				<strong>Team</strong> Perature
+			</h2>
+		</div>
+
+		<!-- Login form -->
+		<form [formGroup]="myForm">
+			<ion-item>
+				<ion-label floating>
+					<ion-icon name="mail" item-start class="text-primary"></ion-icon>
+					Email
+				</ion-label>
+				<ion-input formControlName="email" type="email"></ion-input>
+			</ion-item>
+
+			<ion-item>
+				<ion-label floating>
+					<ion-icon name="lock" item-start class="text-primary"></ion-icon>
+					Contraseña
+				</ion-label>
+				<ion-input formControlName="password" type="password"></ion-input>
+			</ion-item>
+		</form>
+
+		<p text-right ion-text color="secondary" tappable (click)="goToResetPassword()">
+			<strong>Olvidaste tu contraseña?</strong>
+		</p>
+
+		<div>
+			<button ion-button icon-start block color="dark" (click)="loginUser()" [disabled]="!myForm.valid">Ingresar</button>
+		</div>
+
+	</div>
 </ion-content>
