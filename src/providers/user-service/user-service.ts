@@ -22,13 +22,25 @@ export class UserServiceProvider {
 		if (this.token !== undefined && this.token !== null) {
 			return Observable.of(this.token);
 		} else {
-			let headers = { 'UUID': UUID}
+			let headers = { 'UUID': UUID }
 			return this.apiService.get(`/getToken`, null, headers)
 				.map(response => {
 					return response.customToken;
 				}
-			);
+				);
 		}
+	}
+
+	getUUID(): String {
+		return window.localStorage['UUID'];
+	}
+
+	saveUUID(token: String) {
+		window.localStorage['UUID'] = token;
+	}
+
+	destroyUUID() {
+		window.localStorage.removeItem('UUID');
 	}
 
 }

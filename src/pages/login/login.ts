@@ -54,15 +54,29 @@ export class LoginPage {
 			)
 			.then(
 				(user) => {
-					this.authService.getToken("1").subscribe((token) => {
+					let uid = user.user.uid;
+					this.authService.saveUUID(uid);
+					this.authService.getToken(uid).subscribe((token) => {
 						this.jwtService.saveToken(token);
+						this.loading.dismiss();
+						this.navCtrl.setRoot("HomePage");
+					}, err => {
+						this.loading.dismiss().then(() => {
+							let alert = this.alertCtrl.create({
+								message: "Error al autentificar",
+								buttons: [
+									{
+										text: "Ok",
+										role: "cancel",
+										handler: () => {
+											this.navCtrl.setRoot("LoginPage");
+										}
+									}
+								]
+							});
+							alert.present();
+						});
 					});
-					// this.afAuth.auth.currentUser.getIdToken().then((token) => {
-					// 	this.jwtService.saveToken(token);
-					// })
-					console.log("User logging:", user, this.user);
-					this.loading.dismiss();
-					this.navCtrl.setRoot("HomePage");
 				},
 				err => {
 					this.loading.dismiss().then(() => {

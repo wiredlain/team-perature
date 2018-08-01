@@ -74,33 +74,19 @@ export class FormularioPage {
 	 * Demo functions
 	 */
 	onFinish() {
-		let alert = this.alertCtrl.create({
-			title: "Finalizar",
-			message: "¿Estás seguro de finalizar la encuesta?",
-			buttons: [
-				{
-					text: "Cancelar",
-					role: "cancel",
-					handler: () => {
-						this.preview = false;
-					}
-				},
-				{
-					text: "Aceptar",
-					handler: () => {
-						this.preview = true;
-					}
-				}
-			]
-		});
-		alert.present();
+		this.preview = true;
 	}
-	onGuardar(): void {
+
+	onCancelar(): void {
+		this.preview = false;
+		this.step = 1;
+	}
+	guardar(): void {
 		this.loading = this.loadingCtrl.create({
 			dismissOnPageChange: true
 		});
 		this.loading.present().then(()=>{
-			this.cuestionarioService.createCuestionario(this.cuestionario).subscribe((respuesta) => {
+			this.cuestionarioService.createCuestionario(this.cuestionario, 'R0IPoWPzvH7gOC4xCLyZ').subscribe((respuesta) => {
 				this.loading.dismiss().then(() => {
 					let alert = this.alertCtrl.create({
 						message: "Formulario Guardado Exitosamente",
@@ -132,6 +118,24 @@ export class FormularioPage {
 			});
 		});
 	}
+	onGuardar(): void {
+		let alert = this.alertCtrl.create({
+			message: "¿Estás seguro de enviar el formulario?",
+			buttons: [
+				{
+					text: "No",
+					role: "cancel"
+				},
+				{
+					text: "Sí",
+					handler: () => {
+						this.guardar();
+					}
+				}
+			]
+		});
+		alert.present();
+	}
 
 	toggleCondition(_condition) {
 		this.stepCondition = _condition.checked;
@@ -143,7 +147,7 @@ export class FormularioPage {
 		});
 		//this.loading.present();
 		this.loading.present().then(()=>{
-			this.cuestionarioService.getAll().subscribe(
+			this.cuestionarioService.getCuestionario('R0IPoWPzvH7gOC4xCLyZ').subscribe(
 				cuestionarios => {
 					//let id = Object.keys(cuestionarios)[0];
 					let _cuestionario = cuestionarios;

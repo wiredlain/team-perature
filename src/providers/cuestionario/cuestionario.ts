@@ -1,7 +1,7 @@
-import {Injectable} from "@angular/core";
-import {ApiService} from "../api/api";
-import {Http} from "@angular/http";
-import {Observable} from "rxjs";
+import { Injectable } from "@angular/core";
+import { ApiService } from "../api/api";
+import { Observable } from "rxjs";
+import { UserServiceProvider } from "../user-service/user-service";
 
 /*
   Generated class for the CuestionarioProvider provider.
@@ -58,46 +58,35 @@ export class Cuestionario {
 
 @Injectable()
 export class CuestionarioProvider {
-  cuestionario: any;
+	cuestionario: any;
+	uid:String;
+	constructor(
+		private apiService: ApiService,
+		private userService: UserServiceProvider
+	) {
+		this.uid = this.userService.getUUID();
+	}
 
-  constructor(
-    private apiService: ApiService
-  ) {
-  }
-
-  getAll(): Observable<Cuestionario> {
-    if (this.cuestionario !== undefined && this.cuestionario !== null) {
-      return Observable.of(this.cuestionario);
-    } else {
-      let headers = {'UUID': 1, 'IDCUESTIONARIO': 'R0IPoWPzvH7gOC4xCLyZ'}
-      return this.apiService.get(`/cuestionario`, null, headers)
-        .map(response => {
-            return response.cuestionario;
-          }
-        );
-    }
-  }
-
-  createCuestionario(data): Observable<any> {
-    let headers = {'UUID': 1, 'IDCUESTIONARIO': 'R0IPoWPzvH7gOC4xCLyZ', "content-type": "application/json"}
-    return this.apiService.post(`/guardar/`, data, headers)
-      .map(response => {
-          return response;
+	getCuestionario(uidCuestionario: string): Observable<Cuestionario> {
+        if (this.cuestionario !== undefined && this.cuestionario !== null) {
+            return Observable.of(this.cuestionario);
+        } else {
+			let headers = {'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario}
+            return this.apiService.get(`/cuestionario`, null, headers)
+                .map(response => {
+                    return response.cuestionario;
+				}
+			);
         }
-      );
-  }
-
-  getCuestionarioCelula(): Observable<any> {
-    if (this.cuestionario !== undefined && this.cuestionario !== null) {
-      return Observable.of(this.cuestionario);
-    } else {
-      return this.apiService.get(`/cuestionarioCelula`, null)
-        .map(response => {
-            return response;
-          }
-        );
-    }
-  }
+	}
+	createCuestionario(data, uidCuestionario: string): Observable<any> {
+		let headers = {'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario, "content-type" : "application/json", 'idCelula': 1}
+    	return this.apiService.post(`/guardar/`, data, headers)
+      		.map(response => {
+        		return response;
+			}
+		);
+  	}
 
   getRespuestasCelula(data): Observable<any> {
     if (this.cuestionario !== undefined && this.cuestionario !== null) {
@@ -122,5 +111,4 @@ export class CuestionarioProvider {
         );
     }
   }
-
 }

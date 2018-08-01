@@ -1,33 +1,46 @@
-<!--
-  Generated template for the HomePage page.
+<!-- -->
+<ion-header>
+	<ion-navbar color="primary">
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>
+			<strong>Team</strong> Perature
+		</ion-title>
+		<ion-buttons end>
+			<button ion-button tappable (click)="presentNotifications($event)">
+				<ion-icon name="notifications"></ion-icon>
+			</button>
+			<button ion-button tappable (click)="logOut();">
+				<ion-icon name="log-out"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+<ion-content padding class="animated fadeIn common-bg">
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar secondary>
-      <ion-title>Recientes</ion-title>
-    </ion-toolbar>
-  </ion-header>
- 
-  <ion-content>
-    <ion-list>
-    <a ion-button block clear (click)="logOut()">
-      Salir
-    </a>
-    </ion-list>
-    <ion-list>
-      <button menuClose ion-item *ngFor="let feed of feeds" (click)="openFeed(feed)">
-        {{feed.title}}
-      </button>
-    </ion-list>
-    <button ion-button full (click)="addFeed()" action secondary>
-      <ion-icon name="add"></ion-icon> Agregar
-    </button>
-  </ion-content>
- 
-</ion-menu>
+	<p ion-text>Hola *usuario* desde este menú podrás seleccionar las tareas que puedes llevar a cabo.</p>
+	<ion-grid>
+		<ion-row>
+			<ion-col with-50>
+				<button ion-button block color="menu-o" (click)="verResultados()">
+					<div>
+						<ion-icon name="pie"></ion-icon>
+						<label>Ver Resultados</label>
+					</div>
+				</button>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col with-50>
+				<button ion-button block color="menu-o" (click)="llenarFormulario()">
+					<div>
+						<ion-icon name="book"></ion-icon>
+						<label>Llenar Formulario</label>
+					</div>
+				</button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 
- 
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+</ion-content>
