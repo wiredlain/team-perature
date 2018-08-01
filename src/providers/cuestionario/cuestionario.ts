@@ -82,4 +82,17 @@ export class CuestionarioProvider {
 			}
 		);
   	}
+
+  getCuestionarioCelula(): Observable<any> {
+    if (this.cuestionario !== undefined && this.cuestionario !== null) {
+      return Observable.of(this.cuestionario);
+    } else {
+      //let headers = {'UUID': 'uTTXRArRbKOvRhZTD4WQlpYPzVm1', 'CELULA': 1};
+      return this.apiService.get(`/cuestionarioCelula`, null)
+        .map(response => {
+            return response;
+          }
+        );
+    }
+  }
 }
