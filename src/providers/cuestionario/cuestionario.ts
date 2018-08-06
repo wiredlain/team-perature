@@ -34,6 +34,22 @@ export class ItemPregunta {
   }
 }
 
+export class ItemRespuestas {
+  NombreCelula : string;
+  Respuestas : [0];
+  PromedioGeneral : string;
+
+  constructor(
+    NombreCelula : string,
+    Respuestas : [0],
+    PromedioGeneral : string
+  ) {
+    this.NombreCelula = NombreCelula;
+    this.Respuestas = Respuestas;
+    this.PromedioGeneral = PromedioGeneral;
+  }
+}
+
 export class Cuestionario {
   descripcion: string;
   fechaIni: Date;
@@ -123,4 +139,19 @@ export class CuestionarioProvider {
         );
     }
   }
+
+  getPromedioPorCuestionario_Celula(idCuestionario: string): Observable<any> {
+    if (this.cuestionario !== undefined && this.cuestionario !== null) {
+      return Observable.of(this.cuestionario);
+    } else {
+      let headers = {'IDCUESTIONARIO': idCuestionario};
+      return this.apiService.get(`/getPromedio`, null, headers)
+        .map(response => {
+            return response.Promedio;
+          }
+        );
+    }
+  }
+
+
 }

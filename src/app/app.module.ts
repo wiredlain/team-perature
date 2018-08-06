@@ -22,12 +22,12 @@ import { firebaseConfig } from "../environments/environment";
 import { UserServiceProvider } from "../providers/user-service/user-service";
 import { AuthProvider } from "../providers/auth/auth";
 import { AngularFireDatabaseModule } from "angularfire2/database";
-import { LoginPage } from "../pages/login/login";
+//import { LoginPage } from "../pages/login/login";
 import { NotificacionesPage } from "../pages/notificaciones/notificaciones";
 import { SettingsPage } from "../pages/settings/settings";
 
 @NgModule({
-  declarations: [MyApp, LoginPage, NotificacionesPage, SettingsPage],
+  declarations: [MyApp, NotificacionesPage, SettingsPage],
   imports: [
     BrowserModule,
     HttpModule,
@@ -43,7 +43,7 @@ import { SettingsPage } from "../pages/settings/settings";
     BrowserAnimationsModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, LoginPage, NotificacionesPage, SettingsPage],
+  entryComponents: [MyApp, NotificacionesPage, SettingsPage],
   providers: [
     StatusBar,
     SplashScreen,

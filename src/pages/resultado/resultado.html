@@ -14,14 +14,16 @@
 
 
 <ion-content padding>
-  <!--<ion-item>
+  <div class="" *ngIf="!listaCuestionarios">error</div>
+  <div *ngIf="listaCuestionarios">
+  <ion-item>
       <ion-label>Encuesta</ion-label>
-      <ion-select [(ngModel)]="cuestionario" (ionChange)="alerta(cuestionario);">
-        <ion-option *ngFor="let option of listaCuestionarios">{{option}}</ion-option>
+      <ion-select [(ngModel)]="cuestionario" (ionChange)="setIdCuestionario(cuestionario);">
+        <ion-option *ngFor="let option of listaCuestionarios ">{{option}}</ion-option>
       </ion-select>
-    </ion-item>-->
+    </ion-item>
 
- <!-- <ion-item>
+  <ion-item>
     <ion-scroll scrollX="true" style="width:100vw; height:800px;">
       <ion-row nowrap>
         <div>
@@ -47,18 +49,19 @@
           <div *ngIf="listaResultadoCuestionario" class="inline">
           <table class="inline" *ngFor="let celulas of listaResultadoCuestionario">
             <thead>
-            <th>{{ celulas.nombreCelula }}</th>
+            <th>{{ celulas }}</th>
             </thead>
             <tbody>
-            <tr *ngFor="let item of celulas.respuestas"><td>{{item}}</td></tr>
-            &lt;!&ndash;<tr><td>sddf</td></tr>&ndash;&gt;
+            <tr *ngFor="let item of celulas"><td>{{item}}</td></tr>
+            <!--<tr><td>sddf</td></tr>-->
             </tbody>
           </table>
           </div>
         </div>
       </ion-row>
     </ion-scroll>
-  </ion-item>-->
+  </ion-item>
+  </div>
 </ion-content>
 
 <style>
