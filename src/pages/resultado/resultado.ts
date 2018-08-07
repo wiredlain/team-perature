@@ -22,6 +22,10 @@ export class ResultadoPage {
   cuestionario: Cuestionario;
   listaCuestionarios = [];
   listaResultadoCuestionario = [];
+  error = {
+    message : null,
+    type : null
+  };
 
   constructor(
     public navCtrl: NavController,
@@ -53,7 +57,6 @@ export class ResultadoPage {
             }
           }
         }
-        //console.log(this.listaCuestionarios);
         this.loading.dismiss();
       },
       error => {
@@ -85,33 +88,14 @@ export class ResultadoPage {
           }
         });
 
-        let rs = [], rs2 = [];
-        _.forEach(promedioRespuestas, _preguntas => {
-          for (let preguntasKey in _preguntas) {
-            _.forEach(Object.keys(_preguntas[preguntasKey]), key => {
-                if (key !== 'descripcionPregunta' && key !== 'promedioGeneral') {
-                  if (key === celulas[0]) {
-                    rs.push(_preguntas[preguntasKey][key].promedio);
-                  }
-                  if (key === celulas[1]) {
-                    rs2.push(_preguntas[preguntasKey][key].promedio);
-                  }
-
-                }
-              }
-            );
-          }
+        _.forEach(celulas, i => {
+          let data = {
+            celula : i,
+            respuestas : this.setRespuestasPorCelula(promedioRespuestas,i)
+          };
+          this.listaResultadoCuestionario.push(data);
         });
-        this.listaResultadoCuestionario = [
-          {
-            celula : '1',
-            respuestas : rs
-          },
-          {
-            celula: '2',
-            respuestas : rs2
-          }
-        ];
+
         this.loading.dismiss();
       },
       error => {
@@ -121,6 +105,28 @@ export class ResultadoPage {
         console.log(error);
       }
     );
+  }
+
+  private setRespuestasPorCelula (promedioRespuestas, index){
+    let rs = [];
+    try {
+      _.forEach(promedioRespuestas, _preguntas => {
+        for (let preguntasKey in _preguntas) {
+          _.forEach(Object.keys(_preguntas[preguntasKey]), key => {
+              if (key !== 'descripcionPregunta' && key !== 'promedioGeneral') {
+                if (key === index) {
+                  rs.push(_preguntas[preguntasKey][key].promedio);
+                }
+              }
+            }
+          );
+        }
+      });
+      return rs;
+    }catch (e) {
+      this.error.message = e;
+      this.error.type = 'E';
+    }
   }
 }
 
