@@ -34,22 +34,6 @@ export class ItemPregunta {
   }
 }
 
-export class ItemRespuestas {
-  NombreCelula : string;
-  Respuestas : [0];
-  PromedioGeneral : string;
-
-  constructor(
-    NombreCelula : string,
-    Respuestas : [0],
-    PromedioGeneral : string
-  ) {
-    this.NombreCelula = NombreCelula;
-    this.Respuestas = Respuestas;
-    this.PromedioGeneral = PromedioGeneral;
-  }
-}
-
 export class Cuestionario {
   descripcion: string;
   fechaIni: Date;
@@ -87,7 +71,7 @@ export class CuestionarioProvider {
         if (this.cuestionario !== undefined && this.cuestionario !== null) {
             return Observable.of(this.cuestionario);
         } else {
-			let headers = {'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario}
+			let headers = {'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario};
             return this.apiService.get(`/cuestionario`, null, headers)
                 .map(response => {
                     return response.cuestionario;
@@ -96,7 +80,7 @@ export class CuestionarioProvider {
         }
 	}
 	createCuestionario(data, uidCuestionario: string): Observable<any> {
-		let headers = {'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario, "content-type" : "application/json", 'idCelula': 1}
+		let headers = {'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario, "content-type" : "application/json", 'idCelula': 1};
     	return this.apiService.post(`/guardar/`, data, headers)
       		.map(response => {
         		return response;

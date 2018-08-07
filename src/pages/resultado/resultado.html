@@ -15,7 +15,6 @@
 
 <ion-content padding>
   <div class="" *ngIf="!listaCuestionarios">error</div>
-  <div *ngIf="listaCuestionarios">
   <ion-item>
       <ion-label>Encuesta</ion-label>
       <ion-select [(ngModel)]="cuestionario" (ionChange)="setIdCuestionario(cuestionario);">
@@ -23,13 +22,13 @@
       </ion-select>
     </ion-item>
 
-  <ion-item>
+  <ion-item *ngIf="listaResultadoCuestionario.length > 0">
     <ion-scroll scrollX="true" style="width:100vw; height:800px;">
       <ion-row nowrap>
         <div>
           <table class="inline">
             <thead>
-            <th>Área</th>
+            <tr><th>Área</th></tr>
             </thead>
             <tbody>
             <tr><td>Entrega de valor</td></tr>
@@ -43,17 +42,16 @@
             <tr><td>Proceso adecuado</td></tr>
             <tr><td>Soporte</td></tr>
             <tr><td>Trabajo en equipo</td></tr>
-            <tr><td>Total General Celula</td></tr>
+            <!--<tr><td>Total General Celula</td></tr>-->
             </tbody>
           </table>
           <div *ngIf="listaResultadoCuestionario" class="inline">
           <table class="inline" *ngFor="let celulas of listaResultadoCuestionario">
             <thead>
-            <th>{{ celulas }}</th>
+            <tr><th>{{ celulas.celula }}</th></tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of celulas"><td>{{item}}</td></tr>
-            <!--<tr><td>sddf</td></tr>-->
+            <tr *ngFor="let item of celulas.respuestas"><td>{{item}}</td></tr>
             </tbody>
           </table>
           </div>
@@ -61,7 +59,6 @@
       </ion-row>
     </ion-scroll>
   </ion-item>
-  </div>
 </ion-content>
 
 <style>

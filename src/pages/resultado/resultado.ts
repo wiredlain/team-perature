@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {
-  IonicPage, NavController, NavParams, Loading, LoadingController
+  IonicPage, NavController, Loading, LoadingController
 } from 'ionic-angular';
-import {Cuestionario, CuestionarioProvider, ItemRespuestas} from "../../providers/cuestionario/cuestionario";
+import {Cuestionario, CuestionarioProvider} from "../../providers/cuestionario/cuestionario";
 import * as _ from "lodash";
 
 /**
@@ -22,11 +22,9 @@ export class ResultadoPage {
   cuestionario: Cuestionario;
   listaCuestionarios = [];
   listaResultadoCuestionario = [];
-  respuestas: ItemRespuestas[];
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     public loadingCtrl: LoadingController,
     private cuestionarioService: CuestionarioProvider
   ) {
@@ -42,8 +40,6 @@ export class ResultadoPage {
     });
     this.loading.present();
     this.setListaEncuesta();
-    //TODO: Eliminar
-    this.getRespuestas('R0IPoWPzvH7gOC4xCLyZ');
   }
 
   public setListaEncuesta() {
@@ -77,29 +73,45 @@ export class ResultadoPage {
     this.cuestionarioService.getPromedioPorCuestionario_Celula(idcuestionario).subscribe(
       promedioRespuestas => {
 
-        let arrayCelulas = [];
+        let celulas = [];
 
-        _.forEach(promedioRespuestas, item => {
-          _.forEach(item, _respuestas => {
-            let celula =
-              {
-                nombreCelula: '',
-                respuestas: []
-              };
+        _.forEach(promedioRespuestas[idcuestionario], i => {
+          for (let cel in i) {
+            if (cel !== 'descripcionPregunta' && cel !== 'promedioGeneral') {
+              if (!(celulas.indexOf(cel) > -1)) {
+                celulas.push(cel);
+              }
+            }
+          }
+        });
 
-            //Obtención nombres de células
-            _.forEach(Object.keys(_respuestas), i => {
-              if (!(arrayCelulas.indexOf(i) > -1)) {
-                if (i !== 'descripcionPregunta' && i !== 'promedioGeneral') {
-                  arrayCelulas.push(i)
+        let rs = [], rs2 = [];
+        _.forEach(promedioRespuestas, _preguntas => {
+          for (let preguntasKey in _preguntas) {
+            _.forEach(Object.keys(_preguntas[preguntasKey]), key => {
+                if (key !== 'descripcionPregunta' && key !== 'promedioGeneral') {
+                  if (key === celulas[0]) {
+                    rs.push(_preguntas[preguntasKey][key].promedio);
+                  }
+                  if (key === celulas[1]) {
+                    rs2.push(_preguntas[preguntasKey][key].promedio);
+                  }
 
                 }
               }
-            });
-
-          });
+            );
+          }
         });
-
+        this.listaResultadoCuestionario = [
+          {
+            celula : '1',
+            respuestas : rs
+          },
+          {
+            celula: '2',
+            respuestas : rs2
+          }
+        ];
         this.loading.dismiss();
       },
       error => {
