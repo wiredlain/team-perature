@@ -25,9 +25,14 @@ import { AngularFireDatabaseModule } from "angularfire2/database";
 import { LoginPage } from "../pages/login/login";
 import { NotificacionesPage } from "../pages/notificaciones/notificaciones";
 import { SettingsPage } from "../pages/settings/settings";
+import { ChatProvider } from '../providers/chat/chat';
+import { ChatPage } from "../pages/chat/chat";
+import { ChatBubbleComponent } from "../components/chat-bubble/chat-bubble";
+import { ProfileHeaderComponent } from "../components/profile-header/profile-header";
+import { ElasticTextareaComponent } from "../components/elastic-textarea/elastic-textarea";
 
 @NgModule({
-  declarations: [MyApp, LoginPage, NotificacionesPage, SettingsPage],
+  declarations: [MyApp, LoginPage, NotificacionesPage, SettingsPage, ChatPage, ChatBubbleComponent, ProfileHeaderComponent, ElasticTextareaComponent],
   imports: [
     BrowserModule,
     HttpModule,
@@ -43,7 +48,7 @@ import { SettingsPage } from "../pages/settings/settings";
     BrowserAnimationsModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, LoginPage, NotificacionesPage, SettingsPage],
+  entryComponents: [MyApp, LoginPage, NotificacionesPage, SettingsPage, ChatPage],
   providers: [
     StatusBar,
     SplashScreen,
@@ -55,7 +60,8 @@ import { SettingsPage } from "../pages/settings/settings";
     JwtService,
     UserServiceProvider,
     AuthProvider,
-    Keyboard
+    Keyboard,
+    ChatProvider
   ]
 })
 export class AppModule {}

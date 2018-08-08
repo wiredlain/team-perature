@@ -1,0 +1,36 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <ion-title>
+          ChatPerature
+      </ion-title>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content #content padding class="chatPage">
+  
+    <ion-list no-lines>
+      <ion-item *ngFor="let msg of messages" >
+        <chat-bubble [message]="msg"></chat-bubble>
+      </ion-item>
+    </ion-list>
+  
+  </ion-content>
+  
+  <ion-footer class="chatPageFooter">
+    <ion-toolbar>
+  
+      <ion-item>
+        <ion-label style="margin:0px;"></ion-label>
+        <div item-content style="width:100%;">
+          <elastic-textarea #txtChat placeholder="Escribe tu consulta" lineHeight="22"></elastic-textarea>
+        </div>
+      </ion-item>
+  
+      <ion-buttons right>
+        <button ion-button icon-only style="min-width:45px;" (click)="sendMessage()" ([model])="texto">
+          <ion-icon name="send" disabled="!texto"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+  

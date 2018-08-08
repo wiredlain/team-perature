@@ -11,6 +11,7 @@ import { LoginPage } from "../../pages/login/login";
 import { FeedProvider, Feed } from "../../providers/feed/feed";
 import { NotificacionesPage } from "../notificaciones/notificaciones";
 import { SettingsPage } from "../settings/settings";
+import { ChatPage } from "../chat/chat";
 
 /**
  * Generated class for the HomePage page.
@@ -79,7 +80,9 @@ export class HomePage {
   private gotoPage(page: string): void {
     this.navCtrl.push(page);
   }
-
+  openChat(): void {
+    this.navCtrl.push(ChatPage);
+  }
   logOut() {
     this.afAuth.auth.signOut();
     this.navController.setRoot(LoginPage);

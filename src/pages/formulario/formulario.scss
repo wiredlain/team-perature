@@ -2,6 +2,54 @@ page-formulario{
 	
 }
 li {
-	font-size: $font-size-base;
+	font-size: 1.2rem;
 	line-height: $item-md-body-text-line-height
+}
+.option {
+	display: inline-flex;
+	flex-direction: column;
+}
+.option.item .item-inner {
+	border-bottom: 0;
+}
+.option.item .input-wrapper {
+	display: none;
+}
+.option .label-md {
+	margin-left: 4px;
+    width: 30px;
+    text-align: center;
+    margin: 0 auto;
+}
+.puntuacion {
+	display: flex;
+	width: 100%;
+	padding-left: $item-md-padding-left;
+}
+.puntuacion .text {
+	display: none;
+}
+.puntuacion .radio-md {
+	text-align: center;
+    margin: 0 auto;
+    margin-top: 5px;
+}
+.puntuacion img.circle {
+	border-radius: 50%;
+}
+.puntuacion img.circle.red {
+	background-color: red;
+}
+.puntuacion img.circle.green {
+	background-color: green;
+}
+.puntos {
+	padding-left: $item-md-padding-left;
+}
+.puntos .item-inner .row {
+	width: 100%;
+}
+.puntos .item-inner {
+	border-bottom: $item-md-divider-border-bottom;
+	padding-bottom: 20px;
 }

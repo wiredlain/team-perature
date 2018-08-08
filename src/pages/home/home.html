@@ -8,8 +8,11 @@
 			<strong>Team</strong> Perature
 		</ion-title>
 		<ion-buttons end>
-			<button ion-button tappable (click)="presentNotifications($event)">
+			<!-- <button ion-button tappable (click)="presentNotifications($event)">
 				<ion-icon name="notifications"></ion-icon>
+			</button> -->
+			<button ion-button tappable (click)="openChat();">
+				<ion-icon name="chatbubbles"></ion-icon>
 			</button>
 			<button ion-button tappable (click)="logOut();">
 				<ion-icon name="log-out"></ion-icon>
@@ -21,7 +24,7 @@
 
 	<p ion-text>Hola *usuario* desde este menú podrás seleccionar las tareas que puedes llevar a cabo.</p>
 	<ion-grid>
-		<ion-row>
+		<!--<ion-row>
 			<ion-col with-50>
 				<button ion-button block color="menu-o" (click)="verResultados()">
 					<div>
@@ -30,7 +33,7 @@
 					</div>
 				</button>
 			</ion-col>
-		</ion-row>
+		</ion-row>-->
 		<ion-row>
 			<ion-col with-50>
 				<button ion-button block color="menu-o" (click)="llenarFormulario()">
