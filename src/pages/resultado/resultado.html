@@ -23,7 +23,7 @@
     </ion-item>
 
   <ion-item *ngIf="listaResultadoCuestionario.length > 0">
-    <ion-scroll scrollX="true" style="width:100vw; height: 250px;">
+    <ion-scroll scrollX="true" style="width:100vw; height: 300px;">
       <ion-row nowrap>
         <div>
           <table class="inline">
@@ -42,7 +42,7 @@
             <tr><td>Proceso adecuado</td></tr>
             <tr><td>Soporte</td></tr>
             <tr><td>Trabajo en equipo</td></tr>
-            <!--<tr><td>Total General Celula</td></tr>-->
+            <tr><td>Total General Celula</td></tr>
             </tbody>
           </table>
           <div *ngIf="listaResultadoCuestionario" class="inline">
@@ -51,9 +51,27 @@
             <tr><th>{{ celulas.celula }}</th></tr>
             </thead>
             <tbody>
-            <tr *ngFor="let item of celulas.respuestas"><td>{{item}}</td></tr>
+            <tr *ngFor="let item of celulas.respuestas">
+              <td>
+                {{item}}
+              </td>
+            </tr>
             </tbody>
           </table>
+
+            <table class="inline">
+            <thead>
+            <tr><th> Total General</th></tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let prmedioArea of PromediosGeneralesArea">
+              <td>
+                {{prmedioArea}}
+              </td>
+            </tr>
+            </tbody>
+          </table>
+
           </div>
         </div>
       </ion-row>
@@ -65,5 +83,19 @@
   .inline {
     display: inline;
     overflow-x: scroll;
+  }
+  .circulo {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+  }
+  .red {
+    color: red;
+  }
+  .yellow {
+    color: yellow;
+  }
+  .green {
+    color: green;
   }
 </style>

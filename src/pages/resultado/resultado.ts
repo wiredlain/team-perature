@@ -22,6 +22,7 @@ export class ResultadoPage {
   cuestionario: Cuestionario;
   listaCuestionarios = [];
   listaResultadoCuestionario = [];
+  PromediosGeneralesArea = [];
   error = {
     message : null,
     type : null
@@ -95,7 +96,7 @@ export class ResultadoPage {
           };
           this.listaResultadoCuestionario.push(data);
         });
-
+        this.setPromedioPorArea(promedioRespuestas);
         this.loading.dismiss();
       },
       error => {
@@ -108,21 +109,37 @@ export class ResultadoPage {
   }
 
   private setRespuestasPorCelula (promedioRespuestas, index){
-    let rs = [];
+    let rs = [], promedioCelula = 0, cantidadPreguntas = 0;
     try {
       _.forEach(promedioRespuestas, _preguntas => {
         for (let preguntasKey in _preguntas) {
           _.forEach(Object.keys(_preguntas[preguntasKey]), key => {
               if (key !== 'descripcionPregunta' && key !== 'promedioGeneral') {
                 if (key === index) {
+                  promedioCelula += parseFloat(_preguntas[preguntasKey][key].promedio);
                   rs.push(_preguntas[preguntasKey][key].promedio);
                 }
               }
             }
           );
         }
+        cantidadPreguntas = Object.keys(_preguntas).length;
       });
+      rs.push((promedioCelula/cantidadPreguntas));
       return rs;
+    }catch (e) {
+      this.error.message = e;
+      this.error.type = 'E';
+    }
+  }
+
+  private setPromedioPorArea (promedioRespuestas){
+    try {
+      _.forEach(promedioRespuestas, _preguntas => {
+        for (let preguntasKey in _preguntas) {
+          this.PromediosGeneralesArea.push(_preguntas[preguntasKey].promedioGeneral);
+        }
+      });
     }catch (e) {
       this.error.message = e;
       this.error.type = 'E';
