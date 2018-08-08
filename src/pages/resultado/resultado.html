@@ -16,61 +16,144 @@
 <ion-content padding>
   <div class="" *ngIf="!listaCuestionarios">error</div>
   <ion-item>
-      <ion-label>Encuesta</ion-label>
-      <ion-select [(ngModel)]="cuestionario" (ionChange)="setIdCuestionario(cuestionario);">
-        <ion-option *ngFor="let option of listaCuestionarios ">{{option}}</ion-option>
-      </ion-select>
-    </ion-item>
+    <ion-label>Encuesta</ion-label>
+    <ion-select [(ngModel)]="cuestionario" (ionChange)="setIdCuestionario(cuestionario);">
+      <ion-option *ngFor="let option of listaCuestionarios ">{{option}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-grid *ngIf="listaResultadoCuestionario.length > 0">
+    <ion-row>
+      <ion-col>
+        <ion-row>AREA</ion-row>
+        <ion-row>Entrega de valor</ion-row>
+        <ion-row>Fácil de desplegar</ion-row>
+        <ion-row>Diversión</ion-row>
+        <ion-row>Calidad de código</ion-row>
+        <ion-row>Aprendizaje</ion-row>
+        <ion-row>Mision</ion-row>
+        <ion-row>Peones o jugadores</ion-row>
+        <ion-row>Velocidad</ion-row>
+        <ion-row>Proceso adecuado</ion-row>
+        <ion-row>Soporte</ion-row>
+        <ion-row>Trabajo en equipo</ion-row>
+        <ion-row>Total General Celula</ion-row>
+      </ion-col>
+      <ion-col *ngFor="let celulas of listaResultadoCuestionario">
+        <ion-row>{{ celulas.nombreCelula }}</ion-row>
+        <ion-row *ngFor="let item of celulas.respuestasCelula">
+          <div class="circulo"
+               [ngClass]="{'red': item.promedioActual <= 2, 'yellow': item.promedioActual === 3, 'green': item.promedioActual >= 3}">
+            {{item.promedioActual}}
+          </div>
+          <div class="circulo"
+               [ngClass]="{'red': item.promedioAnterior <= 2, 'yellow': item.promedioAnterior === 3, 'green': item.promedioAnterior >= 3}">
+            {{item.promedioAnterior}}
+          </div>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        3 of 3
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-item *ngIf="listaResultadoCuestionario.length > 0">
     <ion-scroll scrollX="true" style="width:100vw; height: 300px;">
       <ion-row nowrap>
         <div>
           <table class="inline">
-            <thead>
-            <tr><th>Área</th></tr>
-            </thead>
-            <tbody>
-            <tr><td>Entrega de valor</td></tr>
-            <tr><td>Fácil de desplegar</td></tr>
-            <tr><td>Diversión</td></tr>
-            <tr><td>Calidad de código</td></tr>
-            <tr><td>Aprendizaje</td></tr>
-            <tr><td>Mision</td></tr>
-            <tr><td>Peones o jugadores</td></tr>
-            <tr><td>Velocidad</td></tr>
-            <tr><td>Proceso adecuado</td></tr>
-            <tr><td>Soporte</td></tr>
-            <tr><td>Trabajo en equipo</td></tr>
-            <tr><td>Total General Celula</td></tr>
-            </tbody>
+            <tr>
+              <td valign="top">
+                <table>
+                  <tr>
+                    <th>Área</th>
+                  </tr>
+                  <tr>
+                    <td>Entrega de valor</td>
+                  </tr>
+                  <tr>
+                    <td>Fácil de desplegar</td>
+                  </tr>
+                  <tr>
+                    <td>Diversión</td>
+                  </tr>
+                  <tr>
+                    <td>Calidad de código</td>
+                  </tr>
+                  <tr>
+                    <td>Aprendizaje</td>
+                  </tr>
+                  <tr>
+                    <td>Mision</td>
+                  </tr>
+                  <tr>
+                    <td>Peones o jugadores</td>
+                  </tr>
+                  <tr>
+                    <td>Velocidad</td>
+                  </tr>
+                  <tr>
+                    <td>Proceso adecuado</td>
+                  </tr>
+                  <tr>
+                    <td>Soporte</td>
+                  </tr>
+                  <tr>
+                    <td>Trabajo en equipo</td>
+                  </tr>
+                  <tr>
+                    <td>Total General Celula</td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table class="inline" *ngFor="let celulas of listaResultadoCuestionario">
+                  <thead>
+                  <tr>
+                    <th>{{ celulas.nombreCelula }}</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let item of celulas.respuestasCelula">
+                    <td>
+                      <div class="circulo"
+                           [ngClass]="{'red': item.promedioActual <= 2, 'yellow': item.promedioActual === 3, 'green': item.promedioActual >= 3}">{{item.promedioActual
+                        }}
+                      </div>
+                      <div class="circulo"
+                           [ngClass]="{'red': item.promedioAnterior <= 2, 'yellow': item.promedioAnterior === 3, 'green': item.promedioAnterior >= 3}">{{item.promedioAnterior
+                        }}
+                      </div>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
           </table>
           <div *ngIf="listaResultadoCuestionario" class="inline">
-          <table class="inline" *ngFor="let celulas of listaResultadoCuestionario">
-            <thead>
-            <tr><th>{{ celulas.celula }}</th></tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let item of celulas.respuestas">
-              <td>
-                {{item}}
-              </td>
-            </tr>
-            </tbody>
-          </table>
 
             <table class="inline">
-            <thead>
-            <tr><th> Total General</th></tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let prmedioArea of PromediosGeneralesArea">
-              <td>
-                {{prmedioArea}}
-              </td>
-            </tr>
-            </tbody>
-          </table>
+              <thead>
+              <tr>
+                <th> Total</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let prmedioArea of PromediosGeneralesArea">
+                <td>
+                  <div class="circulo"
+                       [ngClass]="{
+                        'red': prmedioArea < 3,
+                        'yellow': prmedioArea >= 3 && prmedioArea < 5,
+                        'green': prmedioArea >= 5}">
+                    {{prmedioArea}}
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
 
           </div>
         </div>
@@ -84,18 +167,25 @@
     display: inline;
     overflow-x: scroll;
   }
+
   .circulo {
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
+    border-radius: 20px;
+    width: 20px;
+    height: 20px;
+    font-size: 0;
+    line-height: 0;
+    display: inline-block;
   }
+
   .red {
-    color: red;
+    background-color: red;
   }
+
   .yellow {
-    color: yellow;
+    background-color: yellow;
   }
+
   .green {
-    color: green;
+    background-color: green;
   }
 </style>

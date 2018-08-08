@@ -137,5 +137,17 @@ export class CuestionarioProvider {
     }
   }
 
+  getCuestionarios(): Observable<any> {
+    if (this.cuestionario !== undefined && this.cuestionario !== null) {
+      return Observable.of(this.cuestionario);
+    } else {
+      return this.apiService.get(`/cuestionarios`, null)
+        .map(response => {
+            return response;
+          }
+        );
+    }
+  }
+
 
 }
