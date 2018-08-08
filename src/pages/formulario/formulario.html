@@ -44,13 +44,11 @@
 											<div *ngIf="item === 1">
 												<img class="circle red" src="assets/sad.png">
 											</div>
+											<div *ngIf="item === 3">
+												<img class="circle yellow" src="assets/poker.png">
+											</div>
 											<div *ngIf="item === 5">
 												<img class="circle green" src="assets/happy.png">
-											</div>
-											<div *ngIf="item > 1 && item < 5">
-												<div class="text">
-													{{item}}
-												</div>
 											</div>
 										</ion-label>
 										<ion-radio [value]="item" [checked]="step.valor === item"></ion-radio>
