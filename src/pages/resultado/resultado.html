@@ -49,9 +49,9 @@
         <ion-row *ngFor="let item of celulas.respuestasCelula">
           <div class="circulo"
                [ngClass]="{
-                 'red': item.promedioActual <= 2,
-                 'yellow': item.promedioActual === 3,
-                 'green': item.promedioActual >= 3}"></div>
+                 'red': item.promedioActual < 3,
+                 'yellow': item.promedioActual >= 3 && item.promedioActual < 5,
+                 'green': item.promedioActual >= 5}"></div>
           <div class="arrow"
                [ngClass]="{
                 'arrow-red': item.promedioAnterior < item.promedioActual,
