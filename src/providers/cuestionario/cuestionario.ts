@@ -72,7 +72,7 @@ export class CuestionarioProvider {
             return Observable.of(this.cuestionario);
         } else {
 			let headers = {'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario}
-            return this.apiService.get(`/cuestionario`, null, headers)
+            return this.apiService.get(`/tempPerature/cuestionario`, null, headers)
                 .map(response => {
                     return response.cuestionario;
 				}
@@ -81,7 +81,7 @@ export class CuestionarioProvider {
 	}
 	createCuestionario(data, uidCuestionario: string): Observable<any> {
 		let headers = {'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario, "content-type" : "application/json", 'idCelula': 1}
-    	return this.apiService.post(`/guardar/`, data, headers)
+    	return this.apiService.post(`/tempPerature/guardar/`, data, headers)
       		.map(response => {
         		return response;
 			}

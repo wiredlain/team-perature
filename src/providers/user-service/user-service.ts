@@ -23,7 +23,7 @@ export class UserServiceProvider {
 			return Observable.of(this.token);
 		} else {
 			let headers = { 'UUID': UUID }
-			return this.apiService.get(`/getToken`, null, headers)
+			return this.apiService.get(`/tempPerature/getToken`, null, headers)
 				.map(response => {
 					return response.customToken;
 				}
