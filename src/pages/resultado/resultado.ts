@@ -45,7 +45,6 @@ export class ResultadoPage {
     });
     this.loading.present();
     this.setListaEncuesta();
-    //this.getComparativa(1);
   }
 
   public setListaEncuesta() {
@@ -71,15 +70,17 @@ export class ResultadoPage {
   }
 
   public setIdCuestionario(idCuestionario: string) {
+    this.loading = this.loadingCtrl.create({
+      dismissOnPageChange: true
+    });
+    this.loading.present();
     this.getRespuestas(idCuestionario);
   }
 
   public getRespuestas(idcuestionario: string) {
     this.cuestionarioService.getPromedioPorCuestionario_Celula(idcuestionario).subscribe(
       promedioRespuestas => {
-
         let celulas = [];
-
         _.forEach(promedioRespuestas[idcuestionario], i => {
           for (let cel in i) {
             if (cel !== 'descripcionPregunta' && cel !== 'promedioGeneral') {
@@ -89,8 +90,7 @@ export class ResultadoPage {
             }
           }
         });
-
-        let newArray = []
+        let newArray = [];
         _.forEach(celulas, i => {
           let data = {
             celula: i,
@@ -100,7 +100,7 @@ export class ResultadoPage {
         });
         this.setPromedioPorArea(promedioRespuestas);
         this.getComparativa(1, newArray);
-        this.loading.dismiss();
+        //this.loading.dismiss();
       },
       error => {
         this.loading.dismiss().then(() => {
@@ -130,8 +130,6 @@ export class ResultadoPage {
       rs.push((promedioCelula / cantidadPreguntas));
       return rs;
     } catch (e) {
-      this.error.message = e;
-      this.error.type = 'E';
     }
   }
 
@@ -175,11 +173,6 @@ export class ResultadoPage {
                 this.listaResultadoCuestionario.push(this.mergeRespuestas(_comparativa, promedioActual));
               }
             });
-
-            if (_comparativa.length > 0) {
-              console.log(this.listaResultadoCuestionario);
-
-            }
             this.loading.dismiss();
           },
           error => {

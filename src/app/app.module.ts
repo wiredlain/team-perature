@@ -22,7 +22,6 @@ import { firebaseConfig } from "../environments/environment";
 import { UserServiceProvider } from "../providers/user-service/user-service";
 import { AuthProvider } from "../providers/auth/auth";
 import { AngularFireDatabaseModule } from "angularfire2/database";
-import { LoginPage } from "../pages/login/login";
 import { NotificacionesPage } from "../pages/notificaciones/notificaciones";
 import { SettingsPage } from "../pages/settings/settings";
 import { ChatProvider } from '../providers/chat/chat';
@@ -32,7 +31,7 @@ import { ProfileHeaderComponent } from "../components/profile-header/profile-hea
 import { ElasticTextareaComponent } from "../components/elastic-textarea/elastic-textarea";
 
 @NgModule({
-  declarations: [MyApp, LoginPage, NotificacionesPage, SettingsPage, ChatPage, ChatBubbleComponent, ProfileHeaderComponent, ElasticTextareaComponent],
+  declarations: [MyApp, NotificacionesPage, SettingsPage, ChatPage, ChatBubbleComponent, ProfileHeaderComponent, ElasticTextareaComponent],
   imports: [
     BrowserModule,
     HttpModule,
@@ -48,7 +47,7 @@ import { ElasticTextareaComponent } from "../components/elastic-textarea/elastic
     BrowserAnimationsModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, LoginPage, NotificacionesPage, SettingsPage, ChatPage],
+  entryComponents: [MyApp, NotificacionesPage, SettingsPage, ChatPage],
   providers: [
     StatusBar,
     SplashScreen,

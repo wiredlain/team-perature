@@ -92,7 +92,7 @@ export class CuestionarioProvider {
     if (this.cuestionario !== undefined && this.cuestionario !== null) {
       return Observable.of(this.cuestionario);
     } else {
-      return this.apiService.get(`/getAnswersByCell`, data)
+      return this.apiService.get(`/tempPerature/getAnswersByCell`, data)
         .map(response => {
             return response;
           }
@@ -104,7 +104,7 @@ export class CuestionarioProvider {
     if (this.cuestionario !== undefined && this.cuestionario !== null) {
       return Observable.of(this.cuestionario);
     } else {
-      return this.apiService.get(`/respuestas`, null)
+      return this.apiService.get(`/tempPerature/respuestas`, null)
         .map(response => {
             return response;
           }
@@ -116,7 +116,7 @@ export class CuestionarioProvider {
     if (this.cuestionario !== undefined && this.cuestionario !== null) {
       return Observable.of(this.cuestionario);
     } else {
-      return this.apiService.get(`/cuestionarioCelula`, null)
+      return this.apiService.get(`/tempPerature/cuestionarioCelula`, null)
         .map(response => {
             return response;
           }
@@ -129,7 +129,7 @@ export class CuestionarioProvider {
       return Observable.of(this.cuestionario);
     } else {
       let headers = {'IDCUESTIONARIO': idCuestionario};
-      return this.apiService.get(`/getPromedio`, null, headers)
+      return this.apiService.get(`/tempPerature/getPromedio`, null, headers)
         .map(response => {
             return response.Promedio;
           }
@@ -141,7 +141,7 @@ export class CuestionarioProvider {
     if (this.cuestionario !== undefined && this.cuestionario !== null) {
       return Observable.of(this.cuestionario);
     } else {
-      return this.apiService.get(`/cuestionarios`, null)
+      return this.apiService.get(`/tempPerature/cuestionarios`, null)
         .map(response => {
             return response;
           }

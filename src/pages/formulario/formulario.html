@@ -12,7 +12,7 @@
 			</button> -->
 			<button ion-button tappable (click)="openChat();">
 				<ion-icon name="chatbubbles"></ion-icon>
-			</button>	
+			</button>
 		</ion-buttons>
 	</ion-navbar>
 </ion-header>
@@ -36,10 +36,11 @@
 								<ion-label stacked>
 									<ion-icon name="star" item-start class="text-primary"></ion-icon>
 									Puntuación
-									<ion-badge>{{step.valor}}</ion-badge>
+                  <ion-badge>{{step.valor}}</ion-badge>
 								</ion-label>
 								<div class="puntuacion">
-									<ion-col width-20 detail-none class="option" radio-group [(ngModel)]="step.valor" *ngFor="let item of [1,2,3,4,5]">
+									<ion-col width-20 detail-none class="option" radio-group [(ngModel)]="step.valor"
+                           *ngFor="let item of [1,2,3,4,5]">
 										<ion-label>
 											<div *ngIf="item === 1">
 												<img class="circle red" src="assets/sad.png">
