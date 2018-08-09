@@ -29,9 +29,11 @@ import { ChatPage } from "../pages/chat/chat";
 import { ChatBubbleComponent } from "../components/chat-bubble/chat-bubble";
 import { ProfileHeaderComponent } from "../components/profile-header/profile-header";
 import { ElasticTextareaComponent } from "../components/elastic-textarea/elastic-textarea";
+import {LoginPage} from "../pages/login/login";
 
 @NgModule({
-  declarations: [MyApp, NotificacionesPage, SettingsPage, ChatPage, ChatBubbleComponent, ProfileHeaderComponent, ElasticTextareaComponent],
+  declarations: [MyApp, NotificacionesPage, SettingsPage, ChatPage, ChatBubbleComponent, ProfileHeaderComponent,
+    ElasticTextareaComponent, LoginPage],
   imports: [
     BrowserModule,
     HttpModule,
@@ -47,7 +49,7 @@ import { ElasticTextareaComponent } from "../components/elastic-textarea/elastic
     BrowserAnimationsModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, NotificacionesPage, SettingsPage, ChatPage],
+  entryComponents: [MyApp, NotificacionesPage, SettingsPage, ChatPage, LoginPage],
   providers: [
     StatusBar,
     SplashScreen,

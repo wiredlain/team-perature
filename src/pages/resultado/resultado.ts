@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {
-  IonicPage, NavController, Loading, LoadingController
+  IonicPage, NavController, Loading, LoadingController, AlertController
 } from 'ionic-angular';
 import {Cuestionario, CuestionarioProvider, ItemPregunta} from "../../providers/cuestionario/cuestionario";
 import * as _ from "lodash";
@@ -31,7 +31,8 @@ export class ResultadoPage {
   constructor(
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
-    private cuestionarioService: CuestionarioProvider
+    private cuestionarioService: CuestionarioProvider,
+    public alertCtrl: AlertController
   ) {
   }
 
@@ -62,8 +63,21 @@ export class ResultadoPage {
       },
       error => {
         this.loading.dismiss().then(() => {
-          console.log(error);
+          let alert = this.alertCtrl.create({
+            message: "Error al obtener el formulario",
+            buttons: [
+              {
+                text: "Ok",
+                role: "cancel",
+                handler: () => {
+                  this.navCtrl.setRoot("HomePage");
+                }
+              }
+            ]
+          });
+          alert.present();
         });
+        this.error.message =
         console.log(error);
       }
     );

@@ -54,5 +54,8 @@ li {
 }
 .puntos .item-inner {
 	border-bottom: $item-md-divider-border-bottom;
-	padding-bottom: 20px;
+	margin-bottom: 20px;
+  padding-bottom: 20px;
+  height: 120px;
+  padding-top: 3px;
 }
