@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {
-  IonicPage, NavController, Loading, LoadingController
+  IonicPage, NavController, Loading, LoadingController, AlertController
 } from 'ionic-angular';
 import {Cuestionario, CuestionarioProvider, ItemPregunta} from "../../providers/cuestionario/cuestionario";
 import * as _ from "lodash";
@@ -18,6 +18,7 @@ import * as _ from "lodash";
   templateUrl: 'resultado.html'
 })
 export class ResultadoPage {
+
   public loading: Loading;
   cuestionario: Cuestionario;
   listaCuestionarios = [];
@@ -31,7 +32,8 @@ export class ResultadoPage {
   constructor(
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
-    private cuestionarioService: CuestionarioProvider
+    private cuestionarioService: CuestionarioProvider,
+    public alertCtrl: AlertController
   ) {
   }
 
@@ -45,6 +47,7 @@ export class ResultadoPage {
     });
     this.loading.present();
     this.setListaEncuesta();
+    //this.getRespuestas('R0IPoWPzvH7gOC4xCLyZ');
   }
 
   public setListaEncuesta() {
@@ -55,6 +58,7 @@ export class ResultadoPage {
           for (let _idCuestionario in <any>_cuestionariosCelulas[celula]) {
             if (!(this.listaCuestionarios.indexOf(_idCuestionario) > -1)) {
               this.listaCuestionarios.push(_idCuestionario);
+              //this.cuestionarioService
             }
           }
         }
@@ -62,9 +66,22 @@ export class ResultadoPage {
       },
       error => {
         this.loading.dismiss().then(() => {
-          console.log(error);
+          let alert = this.alertCtrl.create({
+            message: "Error al obtener los resultados",
+            buttons: [
+              {
+                text: "Ok",
+                role: "cancel",
+                handler: () => {
+                  this.navCtrl.setRoot("HomePage");
+                }
+              }
+            ]
+          });
+          alert.present();
         });
-        console.log(error);
+        this.error.message =
+          console.log(error);
       }
     );
   }
@@ -151,6 +168,7 @@ export class ResultadoPage {
       cuestionarios => {
         let _comparativa = [];
         let _idCuestionario = Object.keys(cuestionarios)[Object.keys(cuestionarios).length - indexReverse].toString();
+        console.log(cuestionarios['R0IPoWPzvH7gOC4xCLyZ'].decripcion);
         this.cuestionarioService.getPromedioPorCuestionario_Celula(_idCuestionario).subscribe(
           rs => {
             let _penultimoCuestionario = rs, celulas = [];
@@ -186,31 +204,31 @@ export class ResultadoPage {
   }
 
   private mergeRespuestas(_comparativa, _promedioActual) {
-
+    console.log('anterior',_comparativa)
+    console.log('actual',_promedioActual)
     let data = {
-      nombreCelula : '',
-      respuestasCelula : []
+      nombreCelula: '',
+      respuestasCelula: []
     };
 
     _.forEach(_comparativa, (_item) => {
       data.nombreCelula = _item.celula;
       _.forEach(_item.respuestas, (_respuesta, i) => {
         /** respuesta de _item **/
-        //console.log(_respuesta, i);
         //item.promedioAnterior = _respuesta;
         data.respuestasCelula[i] = {};
         data.respuestasCelula[i].promedioAnterior = _respuesta;
       });
     });
 
-   _.forEach(_promedioActual, (_item) => {
-      _.forEach(_item.respuestas, (_respuesta, i) => {
-        /** respuesta de _item **/
-        //console.log(_respuesta, i);
-        data.respuestasCelula[i].promedioActual = _respuesta;
-      });
+    _.forEach(_promedioActual, (_item) => {
+      if (data.nombreCelula === _item.celula) {
+        _.forEach(_item.respuestas, (_respuesta, i) => {
+          /** respuesta de _item **/
+          data.respuestasCelula[i].promedioActual = _respuesta;
+        });
+      }
     });
     return data;
   }
 }
-

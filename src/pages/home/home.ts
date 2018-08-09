@@ -12,6 +12,7 @@ import { FeedProvider, Feed } from "../../providers/feed/feed";
 import { NotificacionesPage } from "../notificaciones/notificaciones";
 import { SettingsPage } from "../settings/settings";
 import { ChatPage } from "../chat/chat";
+import { JwtService } from "../../providers/jwt-service/jwt-service";
 
 /**
  * Generated class for the HomePage page.
@@ -29,12 +30,14 @@ export class HomePage {
 
   rootPage = "OpcionesHomePage";
   feeds: Feed[];
+  user: any;
 
   constructor(
     private navController: NavController,
     public afAuth: AngularFireAuth,
     private feedProvider: FeedProvider,
     public alertCtrl: AlertController,
+    public jwtService: JwtService,
 	public popoverCtrl: PopoverController,
 	public navCtrl: NavController
   ) {}
@@ -47,7 +50,11 @@ export class HomePage {
     //this.nav.setRoot('FormularioPage');
   }
 
-  public ionViewWillEnter() {}
+  public ionViewWillEnter() {
+    console.log(this.jwtService.getUser());
+    
+    this.user = this.jwtService.getUser();
+  }
 
   presentNotifications(myEvent) {
     console.log(myEvent);

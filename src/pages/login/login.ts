@@ -58,8 +58,28 @@ export class LoginPage {
 					this.authService.saveUUID(uid);
 					this.authService.getToken(uid).subscribe((token) => {
 						this.jwtService.saveToken(token);
-						this.loading.dismiss();
-						this.navCtrl.setRoot("HomePage");
+						this.authService.getUserUID(uid).subscribe((user) => {
+							this.jwtService.saveUser(user);
+							this.loading.dismiss();
+							this.navCtrl.setRoot("HomePage");
+
+						}, err => {
+							this.loading.dismiss().then(() => {
+								let alert = this.alertCtrl.create({
+									message: "Error al autentificar",
+									buttons: [
+										{
+											text: "Ok",
+											role: "cancel",
+											handler: () => {
+												this.navCtrl.setRoot("LoginPage");
+											}
+										}
+									]
+								});
+								alert.present();
+							});
+						});
 					}, err => {
 						this.loading.dismiss().then(() => {
 							let alert = this.alertCtrl.create({
