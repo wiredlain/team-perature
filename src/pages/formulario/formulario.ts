@@ -152,10 +152,18 @@ export class FormularioPage {
     this.stepCondition = _condition.checked;
   }
 
+  public ionViewDidLeave(){
+	  console.log("leave");
+	  
+	  this.preguntas = [];
+	  this.cuestionario = null;
+  }
+
   public ionViewWillEnter() {
     this.loading = this.loadingCtrl.create({
       dismissOnPageChange: true
-    });
+	});
+	this.preguntas = [];
     //this.loading.present();
     this.loading.present().then(() => {
       this.cuestionarioService
