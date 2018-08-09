@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  api_url: '//teamperaturerest.herokuapp.com/tempPerature'
+  api_url: '//teamperaturerest.herokuapp.com'
   //api_url: '//api.ubersalas.local'
 };
 
