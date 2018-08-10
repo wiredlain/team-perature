@@ -13,6 +13,8 @@ import { Observable } from 'rxjs';
 export class UserServiceProvider {
 
 	token: any;
+	usuario: any;
+	celula: any;
 
 	constructor(
 		private apiService: ApiService
@@ -34,7 +36,30 @@ export class UserServiceProvider {
 	getUUID(): String {
 		return window.localStorage['UUID'];
 	}
-
+	getUserUID(UUID: string): Observable<any> {
+		if (this.usuario !== undefined && this.usuario !== null) {
+			return Observable.of(this.usuario);
+		} else {
+			let headers = { 'UUID': UUID }
+			return this.apiService.get(`/tempPerature/usuarioporId`, null, headers)
+				.map(response => {
+					return response.usuarios;
+				}
+			);
+		}
+	}
+	getCelula(celulaid: string):Observable<any> {
+		if (this.celula !== undefined && this.celula !== null) {
+			return Observable.of(this.celula);
+		} else {
+			let headers = { 'celula': celulaid }
+			return this.apiService.get(`/tempPerature/celulasPorId`, null, headers)
+				.map(response => {
+					return response.snapshot;
+				}
+			);
+		}
+	}
 	saveUUID(token: String) {
 		window.localStorage['UUID'] = token;
 	}

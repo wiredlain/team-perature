@@ -21,11 +21,21 @@
 	</ion-navbar>
 </ion-header>
 <ion-content padding class="animated fadeIn common-bg">
-
-	<p ion-text>Hola *usuario* desde este menú podrás seleccionar las tareas que puedes llevar a cabo.</p>
 	<ion-grid>
 		<ion-row>
-			<ion-col with-50>
+			<ion-col width-50>
+				<p ion-text><strong>Usuario: </strong>{{user?.nombre}}</p>
+				<p ion-text><strong>Célula: </strong>{{user?.nombreCelula}}</p>
+			</ion-col>
+			<ion-col width-50>
+				<p ion-text><strong>Salud del Equipo:</strong></p> 
+			</ion-col>
+		</ion-row>
+		<ion-row class="botones">
+			<ion-col with-33>
+			
+			</ion-col>
+			<ion-col with-33>
 				<button ion-button block color="menu-o" (click)="verResultados()">
 					<div>
 						<ion-icon name="pie"></ion-icon>
@@ -33,17 +43,24 @@
 					</div>
 				</button>
 			</ion-col>
+			<ion-col with-33>
+				
+			</ion-col>
 		</ion-row>
-    <br>
-    <br>
-		<ion-row>
-			<ion-col with-50>
+		<ion-row class="botones">
+			<ion-col with-33>
+			
+			</ion-col>
+			<ion-col with-33>
 				<button ion-button block color="menu-o" (click)="llenarFormulario()">
 					<div>
 						<ion-icon name="book"></ion-icon>
 						<label>Llenar Formulario</label>
 					</div>
 				</button>
+			</ion-col>
+			<ion-col with-33>
+				
 			</ion-col>
 		</ion-row>
 	</ion-grid>
