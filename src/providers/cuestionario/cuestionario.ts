@@ -67,7 +67,7 @@ export class CuestionarioProvider {
 		this.uid = this.userService.getUUID();
 	}
 
-	getCuestionario(uidCuestionario: string): Observable<Cuestionario> {
+	getCuestionario(uidCuestionario: string): Observable<any> {
 		if (this.cuestionario !== undefined && this.cuestionario !== null) {
 			return Observable.of(this.cuestionario);
 		} else {

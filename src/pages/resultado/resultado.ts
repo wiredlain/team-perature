@@ -4,6 +4,7 @@ import {
 } from 'ionic-angular';
 import {Cuestionario, CuestionarioProvider, ItemPregunta} from "../../providers/cuestionario/cuestionario";
 import * as _ from "lodash";
+import {UserServiceProvider} from "../../providers/user-service/user-service";
 
 /**
  * Generated class for the ResultadoPage page.
@@ -33,7 +34,8 @@ export class ResultadoPage {
     public navCtrl: NavController,
     public loadingCtrl: LoadingController,
     private cuestionarioService: CuestionarioProvider,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public userService: UserServiceProvider
   ) {
   }
 
@@ -47,7 +49,7 @@ export class ResultadoPage {
     });
     this.loading.present();
     this.setListaEncuesta();
-    this.getRespuestas('R0IPoWPzvH7gOC4xCLyZ');
+    //this.getRespuestas('R0IPoWPzvH7gOC4xCLyZ');
   }
 
   public setListaEncuesta() {
@@ -119,11 +121,22 @@ export class ResultadoPage {
           });
           let newArray = [];
           _.forEach(celulas, i => {
+            let nombre;
             let data = {
               celula: i,
               respuestas: this.setRespuestasPorCelula(promedioRespuestas, i)
             };
             newArray.push(data);
+            //TODO Asignar nombre de celula, resolver problema de asignacion de nombre antes de que la llamada asincrona termine
+            /*this.userService.getCelula(i).subscribe(
+              nombreCelula => {
+                nombre = nombreCelula.nombre;
+                let data = {
+                  celula: i,
+                  respuestas: this.setRespuestasPorCelula(promedioRespuestas, i)
+                };
+                newArray.push(data);
+              });*/
           });
           this.setPromedioPorArea(promedioRespuestas);
           this.getComparativa(1, newArray);

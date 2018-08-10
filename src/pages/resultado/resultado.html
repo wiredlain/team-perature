@@ -21,8 +21,8 @@
 
   <ion-item>
     <ion-label>Encuesta</ion-label>
-    <ion-select [(ngModel)]="cuestionario" (ionChange)="setIdCuestionario(cuestionario.id);">
-      <ion-option *ngFor="let option of listaCuestionarios ">{{option.nombre}}</ion-option>
+    <ion-select [(ngModel)]="cuestionario" (ionChange)="setIdCuestionario(cuestionario);">
+      <ion-option *ngFor="let option of listaCuestionarios " value="{{option.id}}">{{option.nombre}}</ion-option>
     </ion-select>
   </ion-item>
   <br>
