@@ -14,6 +14,7 @@ export class UserServiceProvider {
 
 	token: any;
 	usuario: any;
+	celula: any;
 
 	constructor(
 		private apiService: ApiService
@@ -43,6 +44,18 @@ export class UserServiceProvider {
 			return this.apiService.get(`/tempPerature/usuarioporId`, null, headers)
 				.map(response => {
 					return response.usuarios;
+				}
+			);
+		}
+	}
+	getCelula(celulaid: string):Observable<any> {
+		if (this.celula !== undefined && this.celula !== null) {
+			return Observable.of(this.celula);
+		} else {
+			let headers = { 'celula': celulaid }
+			return this.apiService.get(`/tempPerature/celulasPorId`, null, headers)
+				.map(response => {
+					return response.snapshot;
 				}
 			);
 		}

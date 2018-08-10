@@ -39,6 +39,7 @@ export class FormularioPage {
 	modelo_preguntas: any[];
 	public loading: Loading;
 	preview: boolean;
+	user: any;
 	cuestionarioId: string;
 	constructor(
 		public navCtrl: NavController,
@@ -52,6 +53,8 @@ export class FormularioPage {
 		 * Step Wizard Settings
 		 */
 		this.modelo_preguntas = [];
+		this.user = this.jwtService.getUser();
+		
 		this.preview = false;
 		this.step = 1; //The value of the first step, always 1
 		this.stepCondition = false; //For each step the condition is set to this value, Set to true if you don't need condition in every step
@@ -93,10 +96,11 @@ export class FormularioPage {
 	guardar(): void {
 		this.loading = this.loadingCtrl.create({
 			dismissOnPageChange: true
-		});
+		});console.log(this.user);
+
 		this.loading.present().then(() => {
 			this.cuestionarioService
-				.createCuestionario(this.cuestionario, this.cuestionarioId)
+				.createCuestionario(this.cuestionario, this.cuestionarioId, this.user.idcelula)
 				.subscribe(
 					respuesta => {
 						this.loading.dismiss().then(() => {
@@ -168,10 +172,9 @@ export class FormularioPage {
 		});
 		this.preguntas = [];
 		//this.loading.present();
-		let user = this.jwtService.getUser();
 		this.loading.present().then(() => {
 			this.cuestionarioService
-				.getCuestionariosValidosPorCelula(user.idcelula)
+				.getCuestionariosValidosPorCelula(this.user.idcelula)
 				.subscribe(
 					cuestionario => {
 						this.cuestionarioId = cuestionario[0].idCuestionario;

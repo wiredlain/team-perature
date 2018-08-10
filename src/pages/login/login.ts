@@ -59,9 +59,12 @@ export class LoginPage {
 					this.authService.getToken(uid).subscribe((token) => {
 						this.jwtService.saveToken(token);
 						this.authService.getUserUID(uid).subscribe((user) => {
-							this.jwtService.saveUser(user);
-							this.loading.dismiss();
-							this.navCtrl.setRoot("HomePage");
+							this.authService.getCelula(user.idcelula).subscribe((celula) => {
+								user.nombreCelula = celula.nombre;
+								this.jwtService.saveUser(user);
+								this.loading.dismiss();
+								this.navCtrl.setRoot("HomePage");
+							});
 
 						}, err => {
 							this.loading.dismiss().then(() => {

@@ -79,8 +79,8 @@ export class CuestionarioProvider {
 				);
 		}
 	}
-	createCuestionario(data, uidCuestionario: string): Observable<any> {
-		let headers = { 'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario, "content-type": "application/json", 'idCelula': 1 }
+	createCuestionario(data, uidCuestionario: string, idcelula:string): Observable<any> {
+		let headers = { 'UUID': this.uid, 'IDCUESTIONARIO': uidCuestionario, "content-type": "application/json", 'idCelula': idcelula }
 		return this.apiService.post(`/tempPerature/guardar/`, data, headers)
 			.map(response => {
 				return response;
