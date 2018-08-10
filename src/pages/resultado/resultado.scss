@@ -48,7 +48,7 @@ page-resultado {
 }
 
 ion-row {
-  height: 20px;
+  height: 25px;
 }
 
 .arrow {
@@ -94,4 +94,26 @@ ion-row {
 
 .green {
   background-color: green;
+}
+
+.error-info {
+  background-color: rgba(78,142,247, 0.5);
+  color: #0039a2;
+}
+
+.error-warning {
+  background-color: rgba(240,255,0, 0.5);
+  color: darkorange;
+}
+
+.error-danger {
+  background-color: rgba(255,0,0, 0.5);
+  color: darkred;
+}
+
+.error {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 3px;
+  padding-left: 10px;
 }

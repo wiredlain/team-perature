@@ -19,14 +19,20 @@
 
 <ion-content padding>
 
-  <div class="" *ngIf="!listaCuestionarios">error</div>
   <ion-item>
     <ion-label>Encuesta</ion-label>
-    <ion-select [(ngModel)]="cuestionario" (ionChange)="setIdCuestionario(cuestionario);">
-      <ion-option *ngFor="let option of listaCuestionarios ">{{option}}</ion-option>
+    <ion-select [(ngModel)]="cuestionario" (ionChange)="setIdCuestionario(cuestionario.id);">
+      <ion-option *ngFor="let option of listaCuestionarios ">{{option.nombre}}</ion-option>
     </ion-select>
   </ion-item>
-
+  <br>
+  <div class="error" *ngIf="error"
+       [ngClass]="{
+          'error-danger': error.type === 'E',
+          'error-info': error.type === 'I',
+          'error-warning': error.type === 'W'}">
+    {{error.message}}
+  </div>
   <ion-grid *ngIf="listaResultadoCuestionario.length > 0">
     <ion-row>
       <ion-col>

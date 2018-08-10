@@ -47,18 +47,27 @@ export class ResultadoPage {
     });
     this.loading.present();
     this.setListaEncuesta();
-    //this.getRespuestas('R0IPoWPzvH7gOC4xCLyZ');
+    this.getRespuestas('R0IPoWPzvH7gOC4xCLyZ');
   }
 
   public setListaEncuesta() {
     this.cuestionarioService.getCuestionarioCelula().subscribe(
       cuestionariosCelula => {
+        let arreglo = [];
         let _cuestionariosCelulas = cuestionariosCelula;
         for (let celula in _cuestionariosCelulas) {
           for (let _idCuestionario in <any>_cuestionariosCelulas[celula]) {
-            if (!(this.listaCuestionarios.indexOf(_idCuestionario) > -1)) {
-              this.listaCuestionarios.push(_idCuestionario);
-              //this.cuestionarioService
+            if (!(arreglo.indexOf(_idCuestionario) > -1)) {
+              arreglo.push(_idCuestionario);
+              this.cuestionarioService.getCuestionario(_idCuestionario).subscribe(
+                cuestionario => {
+                  this.listaCuestionarios.push(
+                    {
+                      id: _idCuestionario,
+                      nombre: cuestionario.decripcion
+                    });
+                }
+              );
             }
           }
         }
@@ -97,33 +106,40 @@ export class ResultadoPage {
   public getRespuestas(idcuestionario: string) {
     this.cuestionarioService.getPromedioPorCuestionario_Celula(idcuestionario).subscribe(
       promedioRespuestas => {
-        let celulas = [];
-        _.forEach(promedioRespuestas[idcuestionario], i => {
-          for (let cel in i) {
-            if (cel !== 'descripcionPregunta' && cel !== 'promedioGeneral') {
-              if (!(celulas.indexOf(cel) > -1)) {
-                celulas.push(cel);
+        if (promedioRespuestas !== null) {
+          let celulas = [];
+          _.forEach(promedioRespuestas[idcuestionario], i => {
+            for (let cel in i) {
+              if (cel !== 'descripcionPregunta' && cel !== 'promedioGeneral') {
+                if (!(celulas.indexOf(cel) > -1)) {
+                  celulas.push(cel);
+                }
               }
             }
-          }
-        });
-        let newArray = [];
-        _.forEach(celulas, i => {
-          let data = {
-            celula: i,
-            respuestas: this.setRespuestasPorCelula(promedioRespuestas, i)
-          };
-          newArray.push(data);
-        });
-        this.setPromedioPorArea(promedioRespuestas);
-        this.getComparativa(1, newArray);
-        //this.loading.dismiss();
+          });
+          let newArray = [];
+          _.forEach(celulas, i => {
+            let data = {
+              celula: i,
+              respuestas: this.setRespuestasPorCelula(promedioRespuestas, i)
+            };
+            newArray.push(data);
+          });
+          this.setPromedioPorArea(promedioRespuestas);
+          this.getComparativa(1, newArray);
+        } else {
+          this.error.message = 'Sin datos disponibles.';
+          this.error.type = 'W';
+          this.listaResultadoCuestionario = [];
+          this.loading.dismiss();
+        }
       },
       error => {
         this.loading.dismiss().then(() => {
-          console.log(error);
+          this.error.message = 'Ha ocurrido un problema, por favor intenta más tarde.';
+          this.error.type = 'E';
+          this.listaResultadoCuestionario = [];
         });
-        console.log(error);
       });
   }
 
@@ -168,7 +184,6 @@ export class ResultadoPage {
       cuestionarios => {
         let _comparativa = [];
         let _idCuestionario = Object.keys(cuestionarios)[Object.keys(cuestionarios).length - indexReverse].toString();
-        console.log(cuestionarios['R0IPoWPzvH7gOC4xCLyZ'].decripcion);
         this.cuestionarioService.getPromedioPorCuestionario_Celula(_idCuestionario).subscribe(
           rs => {
             let _penultimoCuestionario = rs, celulas = [];
@@ -204,8 +219,6 @@ export class ResultadoPage {
   }
 
   private mergeRespuestas(_comparativa, _promedioActual) {
-    console.log('anterior',_comparativa)
-    console.log('actual',_promedioActual)
     let data = {
       nombreCelula: '',
       respuestasCelula: []
