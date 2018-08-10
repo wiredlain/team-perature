@@ -27,19 +27,19 @@
 				<p ion-text><strong>Usuario: </strong>{{user?.nombre}}</p>
 				<p ion-text><strong>Célula: </strong>{{user?.nombreCelula}}</p>
 			</ion-col>
-			<ion-col width-50>
+			<!--<ion-col width-50>
 				<p ion-text><strong>Salud del Equipo:</strong></p> 
-			</ion-col>
+			</ion-col>-->
 		</ion-row>
 		<ion-row class="botones">
 			<ion-col with-33>
 			
 			</ion-col>
 			<ion-col with-33>
-				<button ion-button block color="menu-o" (click)="verResultados()">
+				<button ion-button block color="menu-o" (click)="llenarFormulario()">
 					<div>
-						<ion-icon name="pie"></ion-icon>
-						<label>Ver Resultados</label>
+						<ion-icon name="book"></ion-icon>
+						<label>Completar Team-Perature</label>
 					</div>
 				</button>
 			</ion-col>
@@ -52,10 +52,10 @@
 			
 			</ion-col>
 			<ion-col with-33>
-				<button ion-button block color="menu-o" (click)="llenarFormulario()">
+				<button ion-button block color="menu-o" (click)="verResultados()">
 					<div>
-						<ion-icon name="book"></ion-icon>
-						<label>Llenar Formulario</label>
+						<ion-icon name="pie"></ion-icon>
+						<label>Resultados y Comparativas</label>
 					</div>
 				</button>
 			</ion-col>
